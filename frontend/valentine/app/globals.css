@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream: #FFF6EB;
+  --blush: #F7C6D0;
+  --wine: #7B1E3B;
+  --chocolate: #4E342E;
+  --gold: #E6B566;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cream: var(--cream);
+  --color-blush: var(--blush);
+  --color-wine: var(--wine);
+  --color-chocolate: var(--chocolate);
+  --color-gold: var(--gold);
+  --font-heading: var(--font-playfair);
+  --font-body: var(--font-inter);
+  --font-handwritten: var(--font-caveat);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cream);
+  color: var(--chocolate);
+  font-family: var(--font-inter), sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  .smooth-scroll {
+    scroll-behavior: auto;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
