@@ -44,19 +44,29 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
       {hearts.length > 0 && hearts.map((heart) => (
         <motion.div
           key={heart.id}
-          initial={{ y: '100vh', opacity: 0 }}
+          initial={{ y: '100vh', opacity: 0, scale: 0.5 }}
           animate={{
             y: '-100vh',
             opacity: [0, heart.opacity, heart.opacity, 0],
+            scale: [0.5, 1, 1.2, 0.8],
+            rotate: [0, 10, -10, 0],
           }}
           transition={{
             duration: heart.duration,
             delay: heart.delay,
             repeat: Infinity,
-            ease: 'linear',
+            ease: 'easeInOut',
             opacity: {
               duration: heart.duration,
               times: [0, 0.1, 0.9, 1],
+            },
+            scale: {
+              duration: heart.duration * 0.3,
+              times: [0, 0.2, 0.8, 1],
+            },
+            rotate: {
+              duration: heart.duration * 0.5,
+              times: [0, 0.3, 0.7, 1],
             },
           }}
           style={{
@@ -66,7 +76,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
           }}
           className="select-none pointer-events-none"
         >
-          ❤️
+          💕
         </motion.div>
       ))}
 
@@ -77,9 +87,11 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
           transition={{ duration: 2, delay: 0.5, ease: [0.43, 0.13, 0.23, 0.96] }}
           className="text-3xl md:text-5xl mb-8 text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
         >
-          This isn&apos;t a website.
+          My dearest GUNU,
           <br />
-          It&apos;s a small piece of how I feel about you.
+          This isn&apos;t just a website.
+          <br />
+          It&apos;s my heart speaking to yours.
         </motion.h1>
 
         <motion.p
@@ -88,7 +100,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
           transition={{ duration: 2, delay: 2, ease: [0.43, 0.13, 0.23, 0.96] }}
           className="text-lg md:text-xl mb-12 text-[#4E342E] font-[var(--font-inter)]"
         >
-          Take your time.
+          Take your time, my love.
         </motion.p>
 
         <motion.button
@@ -100,7 +112,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
           onClick={onNext}
           className="px-10 py-4 bg-[#F7C6D0] text-[#7B1E3B] rounded-full text-lg font-[var(--font-inter)] font-medium shadow-lg hover:shadow-xl transition-shadow duration-500"
         >
-          Come closer ❤️
+          Let me show you my heart 💕
         </motion.button>
       </div>
     </motion.section>

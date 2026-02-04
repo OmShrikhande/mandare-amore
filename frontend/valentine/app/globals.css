@@ -6,6 +6,10 @@
   --wine: #7B1E3B;
   --chocolate: #4E342E;
   --gold: #E6B566;
+  --soft-pink: #FFB3BA;
+  --lavender: #E6E6FA;
+  --rose-gold: #E8B4B8;
+  --warm-peach: #FFDAB9;
 }
 
 @theme inline {
@@ -14,6 +18,10 @@
   --color-wine: var(--wine);
   --color-chocolate: var(--chocolate);
   --color-gold: var(--gold);
+  --color-soft-pink: var(--soft-pink);
+  --color-lavender: var(--lavender);
+  --color-rose-gold: var(--rose-gold);
+  --color-warm-peach: var(--warm-peach);
   --font-heading: var(--font-playfair);
   --font-body: var(--font-inter);
   --font-handwritten: var(--font-caveat);

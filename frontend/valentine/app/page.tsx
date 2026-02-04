@@ -5,6 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import LandingSection from './components/LandingSection';
 import MemoryGarden from './components/MemoryGarden';
 import LoveNotesWall from './components/LoveNotesWall';
+import AlbumSection from './components/AlbumSection';
 import ComfortSection from './components/ComfortSection';
 import PersonalMessage from './components/PersonalMessage';
 import FinalClosing from './components/FinalClosing';
@@ -25,6 +26,7 @@ export default function Home() {
           <div key="content" className="smooth-scroll">
             <MemoryGarden />
             <LoveNotesWall />
+            <AlbumSection />
             <ComfortSection />
             <PersonalMessage />
             <FinalClosing />

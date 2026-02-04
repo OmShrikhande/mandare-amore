@@ -23,7 +23,7 @@ export default function PersonalMessage() {
           transition={{ duration: 1.5, delay: 0.3, ease: [0.43, 0.13, 0.23, 0.96] }}
           className="text-xl md:text-2xl mb-12 text-[#7B1E3B] font-[var(--font-playfair)] italic"
         >
-          Just me. No filters.
+          My GUNU, just me speaking from my heart.
         </motion.p>
 
         <motion.div
@@ -49,11 +49,11 @@ export default function PersonalMessage() {
             className="text-left"
           >
             <p className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed mb-4">
-              I don&apos;t say this enough, but loving you feels calm. And that calm means more
-              to me than excitement ever could.
+              My beautiful GUNU, I don&apos;t say this enough, but loving you feels like the most peaceful joy. And that gentle calm means more
+              to me than any excitement ever could.
             </p>
             <p className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed">
-              I don&apos;t need big moments. I just need you, as you are.
+              I don&apos;t need grand gestures, my GUNU. I just need you, exactly as you are - wonderfully unique and perfectly you.
             </p>
           </motion.div>
 

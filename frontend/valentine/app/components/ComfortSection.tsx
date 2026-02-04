@@ -20,9 +20,9 @@ export default function ComfortSection() {
           transition={{ duration: 1.5, ease: [0.43, 0.13, 0.23, 0.96] }}
           className="text-3xl md:text-4xl mb-16 text-[#7B1E3B] font-[var(--font-playfair)] text-center"
         >
-          Some things are simple comforts.
+          My GUNU, you&apos;re my sweetest comfort.
           <br />
-          You&apos;re mine.
+          <span className="text-2xl md:text-3xl">Forever and always.</span>
         </motion.h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
@@ -90,7 +90,7 @@ export default function ComfortSection() {
               className="overflow-hidden"
             >
               <p className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)] text-center leading-relaxed bg-white/60 p-6 rounded-2xl">
-                You make me feel safe — not because you try, but because you&apos;re you.
+                My GUNU, you make me feel so safe and loved — not because you try, but because you&apos;re wonderfully you.
               </p>
             </motion.div>
           </motion.div>
@@ -159,7 +159,7 @@ export default function ComfortSection() {
               className="overflow-hidden"
             >
               <p className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)] text-center leading-relaxed bg-white/60 p-6 rounded-2xl">
-                Sweet things don&apos;t last long. What I feel for you does.
+                My GUNU, you&apos;re sweeter than any chocolate. What I feel for you will last forever.
               </p>
             </motion.div>
           </motion.div>

@@ -41,19 +41,29 @@ export default function FinalClosing() {
       {hearts.map((heart) => (
         <motion.div
           key={heart.id}
-          initial={{ y: '100vh', opacity: 0 }}
+          initial={{ y: '100vh', opacity: 0, scale: 0.3 }}
           animate={{
             y: '-100vh',
             opacity: [0, 0.15, 0.15, 0],
+            scale: [0.3, 1, 1.3, 0.5],
+            rotate: [0, 15, -15, 0],
           }}
           transition={{
             duration: heart.duration,
             delay: heart.delay,
             repeat: Infinity,
-            ease: 'linear',
+            ease: 'easeInOut',
             opacity: {
               duration: heart.duration,
               times: [0, 0.1, 0.9, 1],
+            },
+            scale: {
+              duration: heart.duration * 0.4,
+              times: [0, 0.2, 0.8, 1],
+            },
+            rotate: {
+              duration: heart.duration * 0.6,
+              times: [0, 0.25, 0.75, 1],
             },
           }}
           style={{
@@ -63,7 +73,7 @@ export default function FinalClosing() {
           }}
           className="select-none pointer-events-none"
         >
-          ❤️
+          💖
         </motion.div>
       ))}
 
@@ -74,7 +84,7 @@ export default function FinalClosing() {
           transition={{ duration: 2.5, delay: 1, ease: [0.43, 0.13, 0.23, 0.96] }}
           className="text-2xl md:text-4xl mb-8 text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
         >
-          There&apos;s nothing I&apos;m asking for.
+          My GUNU, there&apos;s nothing I&apos;m asking for.
           <br />
           No expectations. No promises needed.
         </motion.p>
@@ -85,9 +95,9 @@ export default function FinalClosing() {
           transition={{ duration: 2.5, delay: 2.5, ease: [0.43, 0.13, 0.23, 0.96] }}
           className="text-xl md:text-3xl mb-12 text-[#4E342E] font-[var(--font-inter)] leading-relaxed"
         >
-          I just wanted you to know —
+          I just wanted you to know, my GUNU —
           <br />
-          you are deeply loved.
+          you are deeply, endlessly loved.
         </motion.p>
 
         <motion.p
