@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import LandingSection from './components/LandingSection';
-import MemoryGarden from './components/MemoryGarden';
+import PhotoAlbumLanding from './components/PhotoAlbumLanding';
+import MemoryBook from './components/MemoryBook';
 import LoveNotesWall from './components/LoveNotesWall';
 import AlbumSection from './components/AlbumSection';
+import VideoMemories from './components/VideoMemories';
 import ComfortSection from './components/ComfortSection';
 import PersonalMessage from './components/PersonalMessage';
 import FinalClosing from './components/FinalClosing';
@@ -19,35 +20,53 @@ export default function Home() {
   };
 
   return (
-    <main className="relative">
+    <main className="relative section-background">
       <AnimatePresence mode="wait">
         {showLanding ? (
-          <LandingSection key="landing" onNext={handleNext} />
+          <PhotoAlbumLanding key="landing" onComplete={handleNext} />
         ) : (
-          <div key="content" className="smooth-scroll">
-            <SectionTransition delay={0.2}>
-              <MemoryGarden />
-            </SectionTransition>
+          <div key="content" className="smooth-scroll-section">
+            <section className="section-background snap-start">
+              <SectionTransition delay={0.1}>
+                <MemoryBook />
+              </SectionTransition>
+            </section>
 
-            <SectionTransition delay={0.4}>
-              <LoveNotesWall />
-            </SectionTransition>
+            <section className="section-background snap-start">
+              <SectionTransition delay={0.2}>
+                <LoveNotesWall />
+              </SectionTransition>
+            </section>
 
-            <SectionTransition delay={0.6}>
-              <AlbumSection />
-            </SectionTransition>
+            <section className="section-background snap-start">
+              <SectionTransition delay={0.3}>
+                <AlbumSection />
+              </SectionTransition>
+            </section>
 
-            <SectionTransition delay={0.8}>
-              <ComfortSection />
-            </SectionTransition>
+            <section className="section-background snap-start">
+              <SectionTransition delay={0.4}>
+                <VideoMemories />
+              </SectionTransition>
+            </section>
 
-            <SectionTransition delay={1.0}>
-              <PersonalMessage />
-            </SectionTransition>
+            <section className="section-background snap-start">
+              <SectionTransition delay={0.5}>
+                <ComfortSection />
+              </SectionTransition>
+            </section>
 
-            <SectionTransition delay={1.2}>
-              <FinalClosing />
-            </SectionTransition>
+            <section className="section-background snap-start">
+              <SectionTransition delay={0.6}>
+                <PersonalMessage />
+              </SectionTransition>
+            </section>
+
+            <section className="section-background snap-start">
+              <SectionTransition delay={0.7}>
+                <FinalClosing />
+              </SectionTransition>
+            </section>
           </div>
         )}
       </AnimatePresence>

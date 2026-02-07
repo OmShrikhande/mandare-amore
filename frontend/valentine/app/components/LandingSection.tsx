@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { useSoundEffect } from './SoundEffects';
 
 interface FloatingHeart {
   id: number;
@@ -36,6 +37,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
   const [hearts, setHearts] = useState<FloatingHeart[]>([]);
   const [showSparkles, setShowSparkles] = useState(false);
   const [textPhase, setTextPhase] = useState(0);
+  const playSparkle = useSoundEffect('playSparkle');
 
   useEffect(() => {
     setHearts(generateHearts());
@@ -263,7 +265,10 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
                 boxShadow: '0 20px 40px rgba(123, 30, 59, 0.3)'
               }}
               whileTap={{ scale: 0.95 }}
-              onClick={onNext}
+              onClick={() => {
+                playSparkle();
+                onNext();
+              }}
               className="relative px-12 py-6 bg-gradient-to-r from-[#F7C6D0] to-[#E6B566] text-[#7B1E3B] rounded-full text-xl font-[var(--font-playfair)] font-semibold shadow-2xl hover:shadow-3xl transition-all duration-700 overflow-hidden"
             >
               {/* Button sparkles */}

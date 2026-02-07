@@ -29,15 +29,61 @@
 
 html {
   scroll-behavior: smooth;
+  cursor: none; /* Hide default cursor */
 }
 
 body {
-  background: var(--cream);
+  background: linear-gradient(135deg, var(--cream) 0%, #F7E5D7 25%, #FFE4E1 50%, #FFF0F5 75%, var(--cream) 100%);
   color: var(--chocolate);
   font-family: var(--font-inter), sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Custom Heart Cursor */
+.cursor-heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease-out;
+  font-size: 24px;
+  user-select: none;
+}
+
+.cursor-heart::before {
+  content: '💖';
+  display: block;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Trail effect for cursor */
+.cursor-trail {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, rgba(247, 198, 208, 0.6) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: trailFade 0.8s ease-out forwards;
+}
+
+@keyframes trailFade {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
 }
 
 * {
@@ -53,10 +99,102 @@ body {
   .smooth-scroll {
     scroll-behavior: auto;
   }
-  
+
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Performance optimizations */
+* {
+  /* Enable hardware acceleration for smoother animations */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize scrolling on touch devices */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce paint on animations */
+.animated-element {
+  will-change: transform, opacity;
+  contain: layout style paint;
+}
+
+/* Optimize images */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Reduce layout thrashing */
+.no-layout-thrash {
+  contain: layout;
+}
+
+/* Responsive Design Improvements */
+@media (max-width: 768px) {
+  .cursor-heart {
+    font-size: 20px;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  /* Better touch scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Improve tap targets on mobile */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cursor-heart {
+    font-size: 18px;
+  }
+
+  body {
+    font-size: 13px;
+  }
+}
+
+/* Smooth scrolling improvements */
+.smooth-scroll-section {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.smooth-scroll-section > * {
+  scroll-snap-align: start;
+  min-height: 100vh;
+}
+
+/* Enhanced smooth scrolling with momentum */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .smooth-scroll-section {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Consistent background for all sections */
+.section-background {
+  background: linear-gradient(135deg, var(--cream) 0%, #F7E5D7 25%, #FFE4E1 50%, #FFF0F5 75%, var(--cream) 100%);
+  min-height: 100vh;
 }
