@@ -54,7 +54,7 @@ export default function ComfortSection() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            💕 My GUNU, You&apos;re My Everything 💕
+            💕 My gunnu, You&apos;re My Everything 💕
           </motion.h2>
           <motion.p
             className="text-xl md:text-2xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed mb-4"
@@ -214,7 +214,7 @@ export default function ComfortSection() {
                   transition={{ duration: 0.8, delay: 0.6 }}
                   className="relative z-10"
                 >
-                  My GUNU, just like this couple holding hands, you make me feel so connected and loved — your presence is my greatest comfort. 👫💕
+                  My gunnu, just like this couple holding hands, you make me feel so connected and loved — your presence is my greatest comfort. 👫💕
                 </motion.p>
               </motion.div>
             </motion.div>
@@ -396,7 +396,7 @@ export default function ComfortSection() {
                   transition={{ duration: 0.8, delay: 0.6 }}
                   className="relative z-10"
                 >
-                  My GUNU, just like this loving embrace, you fill my heart with warmth and joy that lasts forever. Our love is eternal. 💑💝
+                  My gunnu, just like this loving embrace, you fill my heart with warmth and joy that lasts forever. Our love is eternal. 💑💝
                 </motion.p>
               </motion.div>
             </motion.div>

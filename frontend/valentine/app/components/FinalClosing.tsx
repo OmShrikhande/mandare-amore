@@ -133,7 +133,7 @@ export default function FinalClosing() {
               transition={{ duration: 1.5, delay: 1.2 }}
               className="text-2xl md:text-4xl mb-6 text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
             >
-              My Dearest GUNU,
+              My Dearest gunnu,
             </motion.p>
 
             <motion.p
@@ -152,7 +152,7 @@ export default function FinalClosing() {
               transition={{ duration: 1.5, delay: 2.4 }}
               className="text-lg md:text-xl mb-8 text-[#4E342E] font-[var(--font-inter)] leading-relaxed"
             >
-              You are my everything, my GUNU. My heart beats for you, my dreams include you,
+              You are my everything, my gunnu. My heart beats for you, my dreams include you,
               and my love for you knows no bounds.
             </motion.p>
           </motion.div>
@@ -170,7 +170,7 @@ export default function FinalClosing() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            My GUNU, there&apos;s nothing I&apos;m asking for.
+            My gunnu, there&apos;s nothing I&apos;m asking for.
             <br />
             No expectations. No promises needed.
           </motion.p>
@@ -181,7 +181,7 @@ export default function FinalClosing() {
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 2, delay: 4.5 }}
           >
-            I just wanted you to know, my GUNU —
+            I just wanted you to know, my gunnu —
             <br />
             you are deeply, endlessly, eternally loved.
           </motion.p>

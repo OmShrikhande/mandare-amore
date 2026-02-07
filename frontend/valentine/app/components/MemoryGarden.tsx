@@ -13,33 +13,33 @@ interface Memory {
 const memories: Memory[] = [
   {
     id: 1,
-    title: 'GUNU\'s Magical Smile',
-    reflection: 'Your smile lights up my world, GUNU. It\'s the most beautiful thing I\'ve ever seen.',
+    title: 'gunnu\'s Magical Smile',
+    reflection: 'Your smile lights up my world, gunnu. It\'s the most beautiful thing I\'ve ever seen.',
   },
   {
     id: 2,
     title: 'Your Unique Spirit',
-    reflection: 'GUNU, you\'re so wonderfully unique. Every moment with you feels like discovering a new treasure.',
+    reflection: 'gunnu, you\'re so wonderfully unique. Every moment with you feels like discovering a new treasure.',
   },
   {
     id: 3,
     title: 'Your Gentle Presence',
-    reflection: 'Just being near you, my GUNU, makes everything feel peaceful and right.',
+    reflection: 'Just being near you, my gunnu, makes everything feel peaceful and right.',
   },
   {
     id: 4,
     title: 'How You Truly Listen',
-    reflection: 'You listen with your whole heart, GUNU. It makes me feel so deeply understood.',
+    reflection: 'You listen with your whole heart, gunnu. It makes me feel so deeply understood.',
   },
   {
     id: 5,
     title: 'Your Thoughtful Gestures',
-    reflection: 'Every little thing you do shows how much you care, my beautiful GUNU.',
+    reflection: 'Every little thing you do shows how much you care, my beautiful gunnu.',
   },
   {
     id: 6,
     title: 'Our Perfect Harmony',
-    reflection: 'With you, GUNU, silence isn\'t empty - it\'s filled with our connection.',
+    reflection: 'With you, gunnu, silence isn\'t empty - it\'s filled with our connection.',
   },
 ];
 
@@ -184,7 +184,7 @@ export default function MemoryGarden() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            💕 My Dearest GUNU 💕
+            💕 My Dearest gunnu 💕
           </motion.h2>
           <motion.p
             className="text-xl md:text-2xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed mb-4"

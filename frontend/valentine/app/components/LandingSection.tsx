@@ -188,7 +188,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
             } : {}}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            My dearest GUNU 💕
+            My dearest gunnu 💕
           </motion.h1>
 
           {textPhase >= 1 && (

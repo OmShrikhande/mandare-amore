@@ -15,25 +15,25 @@ const albumItems: AlbumItem[] = [
   {
     id: 1,
     image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iMTAiIGZpbGw9IiNGRkU5RjciLz4KPHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeD0iNDAiIHk9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNjAiIGN5PSI2NSIgcj0iMzUiIGZpbGw9IiNGRkQ5RDciLz4KPGNpcmNsZSBjeD0iNDUiIGN5PSI1NSIgcj0iOCIgZmlsbD0iI0ZGRkZGRiIvPgo8Y2lyY2xlIGN4PSI3NSIgY3k9IjU1IiByPSI4IiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0gNDUgODAgUSB2MCA4NSA3NSA4NSIgc3Ryb2tlPSIjRkZEOURFIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8Y2lyY2xlIGN4PSI1NSIgY3k9IjEwNSIgcj0iMTUiIGZpbGw9IiNGRkQ5RDciLz4KPGNpcmNsZSBjeD0iNjUiIGN5PSIxMDUiIgcj0iMTUiIGZpbGw9IiNGRkQ5RDciLz4KPHRleHQgeD0iNjAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjN0IxRTNCIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5EdXVkdTwvdGV4dD4KPC9zdmc+Cjwvc3ZnPg==',
-    text: 'My GUNU, just like Duudu, you\'re the most adorable and loving bear I know. Your gentle nature and sweet smile light up my world every single day. 💕',
-    title: 'Duudu - My GUNU'
+    text: 'My gunnu, just like Duudu, you\'re the most adorable and loving bear I know. Your gentle nature and sweet smile light up my world every single day. 💕',
+    title: 'Duudu - My gunnu'
   },
   {
     id: 2,
     image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iMTAiIGZpbGw9IiNGOUY5QzQiLz4KPHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeD0iNDAiIHk9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNjAiIGN5PSI2NSIgcj0iMzUiIGZpbGw9IiNGOUY5QzQiLz4KPGNpcmNsZSBjeD0iNDUiIGN5PSI1NSIgcj0iOCIgZmlsbD0iI0ZGRkZGRiIvPgo8Y2lyY2xlIGN4PSI3NSIgY3k9IjU1IiByPSI4IiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0gNDUgODAgUSB2MCA4NSA3NSA4NSIgc3Ryb2tlPSIjN0Y5QzQiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxjaXJjbGUgY3g9IjU1IiBjeT0iMTA1IiByPSIxNSIgZmlsbD0iIzlGOUM0Ii8+CjxjaXJjbGUgY3g9IjY1IiBjeT0iMTA1IiByPSIxNSIgZmlsbD0iIzlGOUM0Ii8+Cjx0ZXh0IHg9IjYwIiB5PSIxNDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzdiMWUzYiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QnV1YnU8L3RleHQ+Cjwvc3ZnPgo8L3N2Zz4K',
-    text: 'GUNU, you\'re my Buubu - the perfect partner who makes every moment special. Your playful spirit and loving heart complete me in ways I never imagined. 🧸',
-    title: 'Buubu - My GUNU'
+    text: 'gunnu, you\'re my Buubu - the perfect partner who makes every moment special. Your playful spirit and loving heart complete me in ways I never imagined. 🧸',
+    title: 'Buubu - My gunnu'
   },
   {
     id: 3,
     image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iMTAiIGZpbGw9IiNGOUI5RDciLz4KPHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeD0iNDAiIHk9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNjAiIGN5PSI2NSIgcj0iMzUiIGZpbGw9IiNGOUI5RDciLz4KPGNpcmNsZSBjeD0iNDUiIGN5PSI1NSIgcj0iOCIgZmlsbD0iI0ZGRkZGRiIvPgo8Y2lyY2xlIGN4PSI3NSIgY3k9IjU1IiByPSI4IiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0gNDUgODAgUSB2MCA4NSA3NSA4NSIgc3Ryb2tlPSIjN0I5RDciIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxjaXJjbGUgY3g9IjU1IiBjeT0iMTA1IiByPSIxNSIgZmlsbD0iIzdCOUQ3Ii8+CjxjaXJjbGUgY3g9IjY1IiBjeT0iMTA1IiByPSIxNSIgZmlsbD0iIzdCOUQ3Ii8+Cjx0ZXh0IHg9IjYwIiB5PSIxNDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzdiMWUzYiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TG92aW5nIENvdXBsZTwvdGV4dD4KPC9zdmc+Cjwvc3ZnPg==',
-    text: 'My GUNU, together we\'re like Duudu and Buubu - the perfect couple who share endless love, laughter, and beautiful moments that last forever. 💑',
+    text: 'My gunnu, together we\'re like Duudu and Buubu - the perfect couple who share endless love, laughter, and beautiful moments that last forever. 💑',
     title: 'Our Love Story'
   },
   {
     id: 4,
     image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iMTAiIGZpbGw9IiNGOUI5RDciLz4KPHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeD0iNDAiIHk9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNjAiIGN5PSI2NSIgcj0iMzUiIGZpbGw9IiNGOUI5RDciLz4KPGNpcmNsZSBjeD0iNDUiIGN5PSI1NSIgcj0iOCIgZmlsbD0iI0ZGRkZGRiIvPgo8Y2lyY2xlIGN4PSI3NSIgY3k9IjU1IiByPSI4IiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0gNDUgODAgUSB2MCA4NSA3NSA4NSIgc3Ryb2tlPSIjN0I5RDciIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxjaXJjbGUgY3g9IjU1IiBjeT0iMTA1IiByPSIxNSIgZmlsbD0iIzdCOUQ3Ii8+CjxjaXJjbGUgY3g9IjY1IiBjeT0iMTA1IiByPSIxNSIgZmlsbD0iIzdCOUQ3Ii8+Cjx0ZXh0IHg9IjYwIiB5PSIxNDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzdiMWUzYiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Rm9yZXZlciBMb3ZlPC90ZXh0Pgo8L3N2Zz4KPHN2Zz4K',
-    text: 'GUNU, my forever love, just like Duudu and Buubu, our story is one of eternal love, sweet moments, and hearts that beat as one. I love you endlessly. 💘',
+    text: 'gunnu, my forever love, just like Duudu and Buubu, our story is one of eternal love, sweet moments, and hearts that beat as one. I love you endlessly. 💘',
     title: 'Forever Love'
   }
 ];
@@ -119,7 +119,7 @@ export default function AlbumSection() {
           transition={{ duration: 1.5, ease: [0.43, 0.13, 0.23, 0.96] }}
           className="text-3xl md:text-4xl mb-16 text-[#7B1E3B] font-[var(--font-playfair)] text-center"
         >
-          My GUNU in Every Form
+          My gunnu in Every Form
           <br />
           <span className="text-2xl md:text-3xl">The bears that remind me of you</span>
         </motion.h2>
