@@ -237,10 +237,10 @@ export default function MemoryBook() {
           <div className="relative w-1/2 h-full" style={{ transformStyle: 'preserve-3d' }}>
             {/* Left Cover - Adjusted rotation for 165deg total angle (7.5deg per side) */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-l-xl shadow-2xl"
+              className="absolute inset-0 bg-gradient-to-br from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-l-xl shadow-2xl demo"
               style={{
                 transformOrigin: 'right center',
-                transform: 'rotateY(7.5deg) translateZ(-10px)',
+                transform: 'rotateY(5.5deg) translateZ(-10px)',
                 boxShadow: '-10px 15px 40px rgba(0,0,0,0.3)',
               }}
             >
@@ -311,7 +311,7 @@ export default function MemoryBook() {
               className="absolute inset-0 bg-gradient-to-bl from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-r-xl shadow-2xl"
               style={{
                 transformOrigin: 'left center',
-                transform: 'rotateY(-7.5deg) translateZ(-10px)',
+                transform: 'rotateY(-5.5deg) translateZ(-10px)',
                 boxShadow: '10px 15px 40px rgba(0,0,0,0.3)',
               }}
             >
