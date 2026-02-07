@@ -225,9 +225,10 @@ export default function MemoryBook() {
           {/* Spine - Shallower for 165-degree flatter look */}
           <div className="absolute left-1/2 top-0 bottom-0 w-8 -translate-x-1/2 z-[5] shadow-xl"
                style={{
-                 transform: 'translateZ(-20px)',
+                 transform: 'translateZ(0.3px)',
                  background: 'linear-gradient(90deg, #4A0E1F 0%, #8B1538 50%, #4A0E1F 100%)',
-                 borderRadius: '2px'
+                 borderRadius: '2px',
+                 boxShadow: 'inset -8px 0 20px rgba(0, 0, 0, 0.5), inset 8px 0 20px rgba(0, 0, 0, 0.4), -10px 15px 40px rgba(0,0,0,0.3)'
                }}>
             <div className="absolute top-6 left-0 right-0 h-0.5 bg-amber-400/10" />
             <div className="absolute bottom-6 left-0 right-0 h-0.5 bg-amber-400/10" />
@@ -264,7 +265,7 @@ export default function MemoryBook() {
               className="absolute inset-y-2 inset-x-2 right-0 bg-white rounded-l-sm shadow-inner overflow-hidden z-10"
               style={{
                 transformOrigin: 'right center',
-                rotateY: 4,
+                rotateY: 4.6,
                 translateZ: 0,
                 backgroundImage: 'radial-gradient(circle at 100% 50%, #fffdfa 0%, #ffffff 100%)',
                 opacity: (isPageTurning && turnDirection === 'prev') ? 0 : 1,
@@ -311,11 +312,11 @@ export default function MemoryBook() {
               className="absolute inset-0 bg-gradient-to-bl from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-r-xl shadow-2xl"
               style={{
                 transformOrigin: 'left center',
-                transform: 'rotateY(-5.5deg) translateZ(-10px)',
+                transform: 'rotateY(-5deg) translateZ(-10px)',
                 boxShadow: '10px 15px 40px rgba(0,0,0,0.3)',
               }}
             >
-              <div className="absolute inset-3 border border-amber-400/10 rounded-r-lg pointer-events-none" />
+              <div className="absolute inset-3 border border-red-400/10 rounded-r-lg pointer-events-none" />
             </motion.div>
 
             {/* Page Stack (Right) */}
@@ -337,12 +338,12 @@ export default function MemoryBook() {
                 transformOrigin: 'left center',
                 backgroundImage: 'linear-gradient(to right, #ffffff 0%, #fffdfa 100%)',
                 x,
-                rotateY: useTransform(x, [-300, 0, 300], [-25, -4, 5]),
+                rotateY: useTransform(x, [-300, 0, 300], [-25, -4.6, 5]),
                 opacity: isPageTurning && turnDirection === 'next' ? 0 : 1,
               }}
               drag={!isPageTurning ? "x" : false}
               dragConstraints={{ left: -300, right: 300 }}
-              dragElastic={0.1}
+              dragElastic={0.5}
               onDragStart={handleDragStart}
               onDragEnd={handleDragEnd}
             >
@@ -363,7 +364,7 @@ export default function MemoryBook() {
                 initial={{ rotateY: turnDirection === 'next' ? -4 : -176 }}
                 animate={{ rotateY: turnDirection === 'next' ? -176 : -4 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.8, ease: [0.645, 0.045, 0.355, 1.000] }}
+                transition={{ duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {/* Front of flipping page */}
