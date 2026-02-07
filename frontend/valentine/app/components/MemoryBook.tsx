@@ -89,14 +89,16 @@ export default function MemoryBook() {
   const [isDragging, setIsDragging] = useState(false);
   const [isPageTurning, setIsPageTurning] = useState(false);
   const [turnDirection, setTurnDirection] = useState<'next' | 'prev' | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
   const bookRef = useRef<HTMLDivElement>(null);
 
   // Motion values for drag interaction
   const x = useMotionValue(0);
+  const rotateY = useTransform(x, [-300, 0, 300], [-25, -4.6, 5]);
 
   // Handle drag start
   const handleDragStart = () => {
-    if (isPageTurning) return;
+    if (isPageTurning || !isOpen) return;
     setIsDragging(true);
   };
 
@@ -132,7 +134,7 @@ export default function MemoryBook() {
   };
 
   const nextPage = () => {
-    if (currentPage < diaryEntries.length - 1 && !isPageTurning) {
+    if (currentPage < diaryEntries.length - 1 && !isPageTurning && isOpen) {
       setTurnDirection('next');
       setIsPageTurning(true);
       setTimeout(() => {
@@ -144,7 +146,7 @@ export default function MemoryBook() {
   };
 
   const prevPage = () => {
-    if (currentPage > 0 && !isPageTurning) {
+    if (currentPage > 0 && !isPageTurning && isOpen) {
       setTurnDirection('prev');
       setIsPageTurning(true);
       setTimeout(() => {
@@ -169,21 +171,7 @@ export default function MemoryBook() {
         transition={{ delay: 0.3, duration: 0.8 }}
         className="text-center mb-12 relative z-10"
       >
-        <style jsx global>{`
-          .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(139, 21, 56, 0.1);
-            border-radius: 10px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(139, 21, 56, 0.2);
-          }
-        `}</style>
+
         <motion.h2
           className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#8B1538] mb-4 font-serif italic"
           style={{
@@ -221,6 +209,7 @@ export default function MemoryBook() {
           animate={{
             rotateY: isDragging ? x.get() / 100 : 0,
           }}
+          onClick={() => !isOpen && setIsOpen(true)}
         >
           {/* Spine - Shallower for 165-degree flatter look */}
           <div className="absolute left-1/2 top-0 bottom-0 w-8 -translate-x-1/2 z-[5] shadow-xl"
@@ -238,123 +227,142 @@ export default function MemoryBook() {
           <div className="relative w-1/2 h-full" style={{ transformStyle: 'preserve-3d' }}>
             {/* Left Cover - Adjusted rotation for 165deg total angle (7.5deg per side) */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-l-xl shadow-2xl demo"
+              className="absolute inset-0 bg-gradient-to-br from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-l-xl shadow-2xl demo cursor-pointer"
               style={{
                 transformOrigin: 'right center',
-                transform: 'rotateY(5.5deg) translateZ(-10px)',
+                transform: 'translateZ(-10px)',
                 boxShadow: '-10px 15px 40px rgba(0,0,0,0.3)',
               }}
+              animate={{
+                rotateY: 4.6,
+                opacity: isOpen ? 1 : 1,
+              }}
+              transition={{ duration: 1, ease: [0.43, 0.13, 0.23, 0.96] }}
             >
               <div className="absolute inset-3 border border-amber-400/10 rounded-l-lg pointer-events-none" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-amber-100 text-2xl font-bold italic" style={{ fontFamily: '"Dancing Script", cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+                  mi amor
+                </span>
+              </div>
             </motion.div>
 
             {/* Page Stack (Left) */}
-            {[...Array(4)].map((_, i) => (
+            {isOpen && [...Array(4)].map((_, i) => (
               <div
                 key={i}
                 className="absolute inset-y-2 inset-x-2 right-0 bg-[#fffdf5] rounded-l-md border-r border-gray-100"
-                style={{ 
+                style={{
                   transformOrigin: 'right center',
-                  transform: `rotateY(5deg) translateZ(${-5 - i * 1}px)` 
+                  transform: `rotateY(5deg) translateZ(${-5 - i * 1}px)`
                 }}
               />
             ))}
 
             {/* Left Page (Image Side) */}
-            <motion.div
-              className="absolute inset-y-2 inset-x-2 right-0 bg-white rounded-l-sm shadow-inner overflow-hidden z-10"
-              style={{
-                transformOrigin: 'right center',
-                rotateY: 4.6,
-                translateZ: 0,
-                backgroundImage: 'radial-gradient(circle at 100% 50%, #fffdfa 0%, #ffffff 100%)',
-                opacity: (isPageTurning && turnDirection === 'prev') ? 0 : 1,
-              }}
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentPage}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                  className="relative h-full w-full p-6 flex flex-col items-center justify-center"
-                >
-                  <div className="relative w-full aspect-[4/5] max-w-[200px] rounded-sm shadow-lg p-2 bg-white rotate-[-1deg] transition-transform hover:rotate-0 duration-500">
-                    <PaperClip className="-top-4 left-1/2 -translate-x-1/2 rotate-12 scale-90" />
-                    <div className="w-full h-full overflow-hidden rounded-sm bg-gray-50">
-                      <img
-                        src={diaryEntries[currentPage].image}
-                        alt="Memory"
-                        className="w-full h-full object-cover grayscale-[5%] sepia-[10%]"
-                      />
-                    </div>
-                  </div>
+            {isOpen && (
+              <motion.div
+                className="absolute inset-y-2 inset-x-2 right-0 bg-white rounded-l-sm shadow-inner overflow-hidden z-10"
+                style={{
+                  transformOrigin: 'right center',
+                  rotateY: 4.6,
+                  translateZ: 0,
+                  backgroundImage: 'radial-gradient(circle at 100% 50%, #fffdfa 0%, #ffffff 100%)',
+                  opacity: (isPageTurning && turnDirection === 'prev') ? 0 : 1,
+                }}
+              >
+                <AnimatePresence mode="wait">
                   <motion.div
-                    className="mt-6 text-center"
-                    initial={{ y: 5, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
+                    key={currentPage}
+                    initial={{ opacity: 1, scale: 1 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.02 }}
+                    transition={{ duration: 0.4 }}
+                    className="relative h-full w-full p-6 flex flex-col items-center justify-center"
                   >
-                    <p className="text-amber-900/60 text-xl italic" style={{ fontFamily: '"Dancing Script", cursive' }}>
-                      {diaryEntries[currentPage].date}
-                    </p>
+                    <div className="relative w-full aspect-[4/5] max-w-[200px] rounded-sm shadow-lg p-2 bg-white rotate-[-1deg] transition-transform hover:rotate-0 duration-500">
+                      <PaperClip className="-top-4 left-1/2 -translate-x-1/2 rotate-12 scale-90" />
+                      <div className="w-full h-full overflow-hidden rounded-sm bg-gray-50">
+                        <img
+                          src={diaryEntries[currentPage].image}
+                          alt="Memory"
+                          className="w-full h-full object-cover grayscale-[5%] sepia-[10%]"
+                        />
+                      </div>
+                    </div>
+                    <motion.div
+                      className="mt-6 text-center"
+                      initial={{ y: 5, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <p className="text-amber-900/60 text-xl italic" style={{ fontFamily: '"Dancing Script", cursive' }}>
+                        {diaryEntries[currentPage].date}
+                      </p>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              </AnimatePresence>
-            </motion.div>
+                </AnimatePresence>
+              </motion.div>
+            )}
           </div>
 
           {/* Right Side (Cover + Page Stack) */}
-          <div className="relative w-1/2 h-full" style={{ transformStyle: 'preserve-3d' }}>
-            {/* Right Cover */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-bl from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-r-xl shadow-2xl"
-              style={{
-                transformOrigin: 'left center',
-                transform: 'rotateY(-5deg) translateZ(-10px)',
-                boxShadow: '10px 15px 40px rgba(0,0,0,0.3)',
-              }}
-            >
-              <div className="absolute inset-3 border border-red-400/10 rounded-r-lg pointer-events-none" />
-            </motion.div>
-
-            {/* Page Stack (Right) */}
-            {[...Array(4)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute inset-y-2 inset-x-2 left-0 bg-[#fffdf5] rounded-r-md border-l border-gray-100"
-                style={{ 
+          {isOpen && (
+            <div className="relative w-1/2 h-full" style={{ transformStyle: 'preserve-3d' }}>
+              {/* Right Cover */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-bl from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-r-xl shadow-2xl cursor-pointer"
+                style={{
                   transformOrigin: 'left center',
-                  transform: `rotateY(-5deg) translateZ(${-5 - i * 1}px)` 
+                  transform: 'translateZ(-10px)',
+                  boxShadow: '10px 15px 40px rgba(0,0,0,0.3)',
                 }}
-              />
-            ))}
+                animate={{
+                  rotateY: -4.6,
+                  opacity: 1,
+                }}
+                transition={{ duration: 1, ease: [0.43, 0.13, 0.23, 0.96] }}
+              >
+                <div className="absolute inset-3 border border-red-400/10 rounded-r-lg pointer-events-none" />
+              </motion.div>
 
-            {/* Right Page (Text Side) */}
-            <motion.div
-              className="absolute inset-y-2 inset-x-2 left-0 bg-white rounded-r-sm shadow-inner cursor-grab active:cursor-grabbing z-10"
-              style={{
-                transformOrigin: 'left center',
-                backgroundImage: 'linear-gradient(to right, #ffffff 0%, #fffdfa 100%)',
-                x,
-                rotateY: useTransform(x, [-300, 0, 300], [-25, -4.6, 5]),
-                opacity: isPageTurning && turnDirection === 'next' ? 0 : 1,
-              }}
-              drag={!isPageTurning ? "x" : false}
-              dragConstraints={{ left: -300, right: 300 }}
-              dragElastic={0.5}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-            >
-              <AnimatePresence mode="wait">
-                <DiaryPageContent
-                  key={currentPage}
-                  entry={diaryEntries[currentPage]}
+              {/* Page Stack (Right) */}
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute inset-y-2 inset-x-2 left-0 bg-[#fffdf5] rounded-r-md border-l border-gray-100"
+                  style={{
+                    transformOrigin: 'left center',
+                    transform: `rotateY(-5deg) translateZ(${-5 - i * 1}px)`
+                  }}
                 />
-              </AnimatePresence>
-            </motion.div>
-          </div>
+              ))}
+
+              {/* Right Page (Text Side) */}
+              <motion.div
+                className="absolute inset-y-2 inset-x-2 left-0 bg-white rounded-r-sm shadow-inner cursor-grab active:cursor-grabbing z-10"
+                style={{
+                  transformOrigin: 'left center',
+                  backgroundImage: 'linear-gradient(to right, #ffffff 0%, #fffdfa 100%)',
+                  x,
+                  rotateY,
+                  opacity: isPageTurning && turnDirection === 'next' ? 0 : 1,
+                }}
+                drag={!isPageTurning ? "x" : false}
+                dragConstraints={{ left: -300, right: 300 }}
+                dragElastic={0.5}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+              >
+                <AnimatePresence mode="wait">
+                  <DiaryPageContent
+                    key={currentPage}
+                    entry={diaryEntries[currentPage]}
+                  />
+                </AnimatePresence>
+              </motion.div>
+            </div>
+          )}
 
           {/* Page Turn Overlay */}
           <AnimatePresence>
@@ -386,17 +394,18 @@ export default function MemoryBook() {
       </div>
 
       {/* Navigation UI */}
-      <div className="relative z-[100] mt-24 flex flex-col items-center gap-8">
-        <div className="flex items-center gap-16">
-          <motion.button
-            onClick={prevPage}
-            disabled={currentPage === 0 || isPageTurning}
-            className="p-5 bg-white rounded-full shadow-2xl border border-rose-100 text-rose-500 disabled:opacity-20 hover:text-rose-600 transition-colors"
-            whileHover={{ scale: 1.1, y: -5 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ChevronLeft size={36} />
-          </motion.button>
+      {isOpen && (
+        <div className="relative z-[100] mt-24 flex flex-col items-center gap-8">
+          <div className="flex items-center gap-16">
+            <motion.button
+              onClick={prevPage}
+              disabled={currentPage === 0 || isPageTurning}
+              className="p-5 bg-white rounded-full shadow-2xl border border-rose-100 text-rose-500 disabled:opacity-20 hover:text-rose-600 transition-colors"
+              whileHover={{ scale: 1.1, y: -5 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <ChevronLeft size={36} />
+            </motion.button>
 
           <div className="px-10 py-4 bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/50 flex items-center gap-4">
             <span className="text-[#8B1538] font-serif text-2xl italic" style={{ fontFamily: '"Dancing Script", cursive' }}>
@@ -434,7 +443,8 @@ export default function MemoryBook() {
             SWIPE TO TURN THE PAGE
           </p>
         </motion.div>
-      </div>
+        </div>
+      )}
     </motion.section>
   );
 }
@@ -443,7 +453,7 @@ export default function MemoryBook() {
 function DiaryPageContent({ entry }: { entry: DiaryEntry }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
+      initial={{ opacity: 1, x: 0 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
       className="relative h-full p-8 flex flex-col"
@@ -467,7 +477,7 @@ function DiaryPageContent({ entry }: { entry: DiaryEntry }) {
         </p>
       </div>
 
-      <div className="flex-1 space-y-4 overflow-y-auto custom-scrollbar relative z-10">
+      <div className="flex-1 space-y-4 overflow-y-auto relative z-10">
         {entry.content.split('\n').map((line, i) => (
           <p
             key={i}
