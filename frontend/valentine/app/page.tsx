@@ -38,11 +38,6 @@ export default function Home() {
               </SectionTransition>
             </section>
 
-            <section className="section-background snap-start">
-              <SectionTransition delay={0.3}>
-                <AlbumSection />
-              </SectionTransition>
-            </section>
 
             <section className="section-background snap-start">
               <SectionTransition delay={0.4}>

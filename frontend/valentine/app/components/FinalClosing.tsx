@@ -234,7 +234,7 @@ export default function FinalClosing() {
         {/* Interactive heart constellation */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          animate={isInView ? { opacity: 0 } : { opacity: 0 }}
           transition={{ duration: 3, delay: 7 }}
           className="absolute bottom-20 left-1/2 transform -translate-x-1/2"
         >
