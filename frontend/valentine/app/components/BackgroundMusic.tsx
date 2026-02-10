@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import { Volume2, VolumeX, Play, Pause, Music } from 'lucide-react';
-import { getCloudinaryUrl } from '../../lib/cloudinary';
+// import { getCloudinaryUrl } from '../../lib/cloudinary';
 
 export default function BackgroundMusic() {
   const [isPlaying, setIsPlaying] = useState(false);
