@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { useTheme } from './ThemeContext';
 
 interface SlowHeart {
   id: number;
@@ -23,6 +24,7 @@ const generateSlowHearts = (): SlowHeart[] => {
 };
 
 export default function FinalClosing() {
+  const { theme } = useTheme();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-300px' });
   const [hearts] = useState<SlowHeart[]>(generateSlowHearts());
@@ -35,7 +37,9 @@ export default function FinalClosing() {
       transition={{ duration: 3, ease: [0.43, 0.13, 0.23, 0.96] }}
       className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #FFF6EB 0%, #F7E5D7 25%, #FFE4E1 50%, #F0E6FF 75%, #FFF6EB 100%)',
+        background: theme === 'dark'
+          ? 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%, #0f0f0f 100%)'
+          : 'linear-gradient(135deg, #FFF6EB 0%, #F7E5D7 25%, #FFE4E1 50%, #F0E6FF 75%, #FFF6EB 100%)',
       }}
     >
       {/* Enhanced floating elements */}

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { useTheme } from './ThemeContext';
 
 interface Note {
   id: number;
@@ -162,11 +163,16 @@ function StickyNote({ note, index }: { note: Note; index: number }) {
 }
 
 export default function LoveNotesWall() {
+  const { theme } = useTheme();
   const headerRef = useRef(null);
   const isHeaderInView = useInView(headerRef, { once: true });
 
   return (
-    <section className="min-h-screen py-20 px-6 md:px-12 bg-gradient-to-br from-[#FFE4E1] via-[#FFF6EB] to-[#F0E6FF] relative overflow-hidden">
+    <section className="min-h-screen py-20 px-6 md:px-12 relative overflow-hidden" style={{
+      background: theme === 'dark'
+        ? 'linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%)'
+        : 'linear-gradient(135deg, #FFE4E1 0%, #FFF6EB 50%, #F0E6FF 100%)'
+    }}>
       {/* Valentine's themed floating elements */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(15)].map((_, i) => (
@@ -205,14 +211,18 @@ export default function LoveNotesWall() {
           className="text-center mb-16"
         >
           <motion.h2
-            className="text-4xl md:text-5xl mb-6 text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
+            className={`text-4xl md:text-5xl mb-6 font-[var(--font-playfair)] leading-relaxed ${
+              theme === 'dark' ? 'text-white' : 'text-[#7B1E3B]'
+            }`}
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
             💌 Love Notes for My gunnu 💌
           </motion.h2>
           <motion.p
-            className="text-xl md:text-2xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed mb-4"
+            className={`text-xl md:text-2xl font-[var(--font-inter)] leading-relaxed mb-4 ${
+              theme === 'dark' ? 'text-white/90' : 'text-[#4E342E]'
+            }`}
             initial={{ opacity: 0 }}
             animate={isHeaderInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1.5, delay: 0.5 }}
@@ -220,7 +230,9 @@ export default function LoveNotesWall() {
             Every note is a piece of my heart, written just for you
           </motion.p>
           <motion.p
-            className="text-lg md:text-xl text-[#7B1E3B] font-[var(--font-playfair)] italic"
+            className={`text-lg md:text-xl font-[var(--font-playfair)] italic ${
+              theme === 'dark' ? 'text-white/80' : 'text-[#7B1E3B]'
+            }`}
             initial={{ opacity: 0, y: 20 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1.5, delay: 1 }}

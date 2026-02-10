@@ -3,8 +3,10 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { useTheme } from './ThemeContext';
 
 export default function PersonalMessage() {
+  const { theme } = useTheme();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-200px' });
 
@@ -14,14 +16,21 @@ export default function PersonalMessage() {
       initial={{ opacity: 0 }}
       animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 2, ease: [0.43, 0.13, 0.23, 0.96] }}
-      className="min-h-screen py-20 px-6 md:px-12 bg-[#FFF6EB] flex items-center justify-center"
+      className="min-h-screen py-20 px-6 md:px-12 flex items-center justify-center"
+      style={{
+        background: theme === 'dark'
+          ? 'linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 50%, #1a1a1a 100%)'
+          : '#FFF6EB'
+      }}
     >
       <div className="max-w-3xl mx-auto text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 1.5, delay: 0.3, ease: [0.43, 0.13, 0.23, 0.96] }}
-          className="text-xl md:text-2xl mb-12 text-[#7B1E3B] font-[var(--font-playfair)] italic"
+          className={`text-xl md:text-2xl mb-12 font-[var(--font-playfair)] italic ${
+            theme === 'dark' ? 'text-white' : 'text-[#7B1E3B]'
+          }`}
         >
           My gunnu, just me speaking from my heart.
         </motion.p>

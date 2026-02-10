@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, PanInfo, useMotionValue, useTransform } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Heart } from 'lucide-react';
+import { useTheme } from './ThemeContext';
 
 interface DiaryEntry {
   id: number;
@@ -85,6 +86,7 @@ const PaperClip = ({ className }: { className?: string }) => (
 );
 
 export default function MemoryBook() {
+  const { theme } = useTheme();
   const [currentPage, setCurrentPage] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [isPageTurning, setIsPageTurning] = useState(false);
@@ -103,7 +105,7 @@ export default function MemoryBook() {
   };
 
   // Handle drag end with realistic page turning
-  const handleDragEnd = (event: any, info: PanInfo) => {
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     setIsDragging(false);
     const threshold = 100;
     const velocity = info.velocity.x;
@@ -117,7 +119,7 @@ export default function MemoryBook() {
           setCurrentPage(prev => prev - 1);
           setIsPageTurning(false);
           setTurnDirection(null);
-        }, 800);
+        }, 1000);
       } else if (info.offset.x < 0 && currentPage < diaryEntries.length - 1) {
         // Swipe Left -> Next Page
         setTurnDirection('next');
@@ -126,7 +128,7 @@ export default function MemoryBook() {
           setCurrentPage(prev => prev + 1);
           setIsPageTurning(false);
           setTurnDirection(null);
-        }, 800);
+        }, 1000);
       }
     }
     // Animate x back to 0 smoothly instead of setting it
@@ -141,7 +143,7 @@ export default function MemoryBook() {
         setCurrentPage(prev => prev + 1);
         setIsPageTurning(false);
         setTurnDirection(null);
-      }, 800);
+      }, 1000);
     }
   };
 
@@ -153,7 +155,7 @@ export default function MemoryBook() {
         setCurrentPage(prev => prev - 1);
         setIsPageTurning(false);
         setTurnDirection(null);
-      }, 800);
+      }, 1000);
     }
   };
 
@@ -162,7 +164,12 @@ export default function MemoryBook() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: [0.43, 0.13, 0.23, 0.96] }}
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-20 bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-center px-4 py-20 overflow-hidden relative z-[999]"
+      style={{
+        background: theme === 'dark'
+          ? 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%, #0f0f0f 100%)'
+          : 'linear-gradient(135deg, #FFE4E1 0%, #FFF6EB 50%, #F0E6FF 100%)',
+      }}
     >
       {/* Section Title */}
       <motion.div
@@ -173,18 +180,78 @@ export default function MemoryBook() {
       >
 
         <motion.h2
-          className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#8B1538] mb-4 font-serif italic"
+          className={`text-4xl sm:text-5xl md:text-6xl font-bold mb-4 font-serif italic ${
+            theme === 'dark' ? 'text-white' : 'text-pink-800'
+          }`}
           style={{
             fontFamily: '"Dancing Script", cursive',
-            textShadow: '3px 3px 6px rgba(139, 21, 56, 0.2)',
+            textShadow: theme === 'dark'
+              ? '3px 3px 6px rgba(0, 0, 0, 0.8)'
+              : '3px 3px 6px rgba(255, 192, 203, 0.3)',
           }}
         >
           💖 Our Romantic Story 💖
         </motion.h2>
-        <p className="text-xl text-[#6B4423] font-medium italic" style={{ fontFamily: '"Quicksand", sans-serif' }}>
+        <p className={`text-xl font-medium italic ${
+          theme === 'dark' ? 'text-white/90' : 'text-pink-700'
+        }`} style={{ fontFamily: '"Quicksand", sans-serif' }}>
           Every page is a piece of my heart, Gunnu... 💕
         </p>
       </motion.div>
+
+
+
+      {/* Floating Emojis */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[-1]">
+        <motion.div
+          className="absolute text-6xl opacity-20"
+          style={{ top: '10%', left: '10%' }}
+          animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        >
+          💕
+        </motion.div>
+        <motion.div
+          className="absolute text-5xl opacity-15"
+          style={{ top: '20%', right: '15%' }}
+          animate={{ y: [0, 10, 0], rotate: [0, -5, 0] }}
+          transition={{ duration: 4, repeat: Infinity }}
+        >
+          😘
+        </motion.div>
+        <motion.div
+          className="absolute text-4xl opacity-25"
+          style={{ bottom: '25%', left: '5%' }}
+          animate={{ y: [0, -8, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
+        >
+          🤗
+        </motion.div>
+        <motion.div
+          className="absolute text-5xl opacity-20"
+          style={{ bottom: '15%', right: '10%' }}
+          animate={{ y: [0, 8, 0], rotate: [0, 3, 0] }}
+          transition={{ duration: 3.5, repeat: Infinity }}
+        >
+          💖
+        </motion.div>
+        <motion.div
+          className="absolute text-4xl opacity-15"
+          style={{ top: '60%', left: '85%' }}
+          animate={{ y: [0, -6, 0], rotate: [0, -3, 0] }}
+          transition={{ duration: 2.8, repeat: Infinity }}
+        >
+          😍
+        </motion.div>
+        <motion.div
+          className="absolute text-3xl opacity-20"
+          style={{ top: '40%', right: '80%' }}
+          animate={{ y: [0, 7, 0], scale: [1, 1.05, 1] }}
+          transition={{ duration: 3.2, repeat: Infinity }}
+        >
+          🥰
+        </motion.div>
+      </div>
 
       {/* 3D Diary Container */}
       <div className="relative w-full max-w-4xl mx-auto h-[450px] flex items-center justify-center" style={{ perspective: '3000px' }}>
@@ -215,9 +282,13 @@ export default function MemoryBook() {
           <div className="absolute left-1/2 top-0 bottom-0 w-8 -translate-x-1/2 z-[5] shadow-xl"
                style={{
                  transform: 'translateZ(0.3px)',
-                 background: 'linear-gradient(90deg, #4A0E1F 0%, #8B1538 50%, #4A0E1F 100%)',
+                 background: theme === 'dark'
+                   ? 'linear-gradient(90deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)'
+                   : 'linear-gradient(90deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
                  borderRadius: '2px',
-                 boxShadow: 'inset -8px 0 20px rgba(0, 0, 0, 0.5), inset 8px 0 20px rgba(0, 0, 0, 0.4), -10px 15px 40px rgba(0,0,0,0.3)'
+                 boxShadow: theme === 'dark'
+                   ? 'inset -8px 0 20px rgba(0, 0, 0, 0.8), inset 8px 0 20px rgba(0, 0, 0, 0.7), -10px 15px 40px rgba(0,0,0,0.8)'
+                   : 'inset -8px 0 20px rgba(255,192,203,0.3), inset 8px 0 20px rgba(255,192,203,0.2), -10px 15px 40px rgba(255,192,203,0.3)'
                }}>
             <div className="absolute top-6 left-0 right-0 h-0.5 bg-amber-400/10" />
             <div className="absolute bottom-6 left-0 right-0 h-0.5 bg-amber-400/10" />
@@ -227,24 +298,25 @@ export default function MemoryBook() {
           <div className="relative w-1/2 h-full" style={{ transformStyle: 'preserve-3d' }}>
             {/* Left Cover - Adjusted rotation for 165deg total angle (7.5deg per side) */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-l-xl shadow-2xl demo cursor-pointer"
+              className="absolute inset-0 rounded-l-xl shadow-2xl demo cursor-pointer"
               style={{
                 transformOrigin: 'right center',
                 transform: 'translateZ(-10px)',
-                boxShadow: '-10px 15px 40px rgba(0,0,0,0.3)',
+                boxShadow: theme === 'dark'
+                  ? '-10px 15px 40px rgba(0,0,0,0.8), 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(255, 215, 0, 0.1)'
+                  : '-10px 15px 40px rgba(255,192,203,0.3), 0 0 20px rgba(139, 0, 0, 0.4), 0 0 40px rgba(128, 0, 0, 0.2), inset 0 0 20px rgba(139, 0, 0, 0.1)',
+                background: theme === 'dark'
+                  ? 'linear-gradient(135deg, #FFD700 0%, #FFD700 50%, #FFD700 100%)'
+                  : 'linear-gradient(135deg, #800020 0%, #8B0000 50%, #800020 100%)',
               }}
               animate={{
                 rotateY: 4.6,
-                opacity: isOpen ? 1 : 1,
+                opacity: isOpen ? 1 : 0,
               }}
               transition={{ duration: 1, ease: [0.43, 0.13, 0.23, 0.96] }}
             >
               <div className="absolute inset-3 border border-amber-400/10 rounded-l-lg pointer-events-none" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-amber-100 text-2xl font-bold italic" style={{ fontFamily: '"Dancing Script", cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-                  mi amor
-                </span>
-              </div>
+
             </motion.div>
 
             {/* Page Stack (Left) */}
@@ -286,7 +358,7 @@ export default function MemoryBook() {
                         <img
                           src={diaryEntries[currentPage].image}
                           alt="Memory"
-                          className="w-full h-full object-cover grayscale-[5%] sepia-[10%]"
+                          className="w-full h-full object-cover grayscale-[5%]"
                         />
                       </div>
                     </div>
@@ -307,38 +379,85 @@ export default function MemoryBook() {
           </div>
 
           {/* Right Side (Cover + Page Stack) */}
-          {isOpen && (
-            <div className="relative w-1/2 h-full" style={{ transformStyle: 'preserve-3d' }}>
-              {/* Right Cover */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-bl from-[#7B1E3B] via-[#8B1538] to-[#5D152C] rounded-r-xl shadow-2xl cursor-pointer"
+          <div className="relative w-1/2 h-full" style={{ transformStyle: 'preserve-3d' }}>
+            {/* Right Cover */}
+            <motion.div
+              className="absolute inset-0 rounded-r-xl shadow-2xl cursor-pointer"
+              style={{
+                transformOrigin: 'left center',
+                transform: 'translateZ(-10px)',
+                boxShadow: theme === 'dark'
+                  ? '10px 15px 40px rgba(0,0,0,0.8), 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.2), inset 0 0 20px rgba(255, 215, 0, 0.1)'
+                  : '10px 15px 40px rgba(255,192,203,0.3), 0 0 20px rgba(139, 0, 0, 0.4), 0 0 40px rgba(128, 0, 0, 0.2), inset 0 0 20px rgba(139, 0, 0, 0.1)',
+                background: theme === 'dark'
+                  ? 'linear-gradient(135deg,#FFD700 0%, #FFD700 50%, #FFD700 100%)'
+                  : 'linear-gradient(135deg, #800020 0%, #8B0000 50%, #800020 100%)',
+              }}
+              animate={{
+                rotateY: isOpen ? -4.6 : 0,
+                opacity: 1,
+              }}
+              transition={{ duration: 1, ease: [0.43, 0.13, 0.23, 0.96] }}
+            >
+              <div className="absolute inset-3 border border-red-400/10 rounded-r-lg pointer-events-none" />
+              <div className="absolute inset-0 flex items-center justify-center relative">
+                <span className="text-2xl font-bold italic relative" style={{
+                  fontFamily: '"Dancing Script", cursive',
+                  background: 'linear-gradient(45deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #FFF8DC 75%, #FFD700 100%)',
+                  backgroundSize: '200% 200%',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  textShadow: '0 0 8px rgba(255, 215, 0, 0.8), 0 0 16px rgba(255, 215, 0, 0.6), 0 0 24px rgba(255, 215, 0, 0.4), 0 0 32px rgba(255, 215, 0, 0.2)',
+                  filter: 'drop-shadow(0 0 5px rgba(255, 215, 0, 0.9)) brightness(1.3) contrast(1.2) saturate(1.1)',
+                  border: '1px solid rgba(255, 215, 0, 0.3)',
+                  borderRadius: '4px',
+                  padding: '2px 8px',
+                  boxShadow: 'inset 0 0 10px rgba(255, 215, 0, 0.2), 0 0 20px rgba(255, 215, 0, 0.3)'
+                }}>
+                  mi amor
+                </span>
+                {/* Sparkling particles */}
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute text-yellow-300 text-xs"
+                    style={{
+                      left: `${40 + Math.sin(i * 45 * Math.PI / 180) * 60}px`,
+                      top: `${40 + Math.cos(i * 45 * Math.PI / 180) * 60}px`,
+                    }}
+                    animate={{
+                      scale: [0, 1, 0],
+                      opacity: [0, 1, 0],
+                      rotate: [0, 180, 360]
+                    }}
+                    transition={{
+                      duration: 2,
+                      delay: i * 0.3,
+                      repeat: Infinity,
+                      ease: 'easeInOut'
+                    }}
+                  >
+                    ✨
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Page Stack (Right) */}
+            {isOpen && [...Array(4)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute inset-y-2 inset-x-2 left-0 bg-[#fffdf5] rounded-r-md border-l border-gray-100"
                 style={{
                   transformOrigin: 'left center',
-                  transform: 'translateZ(-10px)',
-                  boxShadow: '10px 15px 40px rgba(0,0,0,0.3)',
+                  transform: `rotateY(-5deg) translateZ(${-5 - i * 1}px)`
                 }}
-                animate={{
-                  rotateY: -4.6,
-                  opacity: 1,
-                }}
-                transition={{ duration: 1, ease: [0.43, 0.13, 0.23, 0.96] }}
-              >
-                <div className="absolute inset-3 border border-red-400/10 rounded-r-lg pointer-events-none" />
-              </motion.div>
+              />
+            ))}
 
-              {/* Page Stack (Right) */}
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute inset-y-2 inset-x-2 left-0 bg-[#fffdf5] rounded-r-md border-l border-gray-100"
-                  style={{
-                    transformOrigin: 'left center',
-                    transform: `rotateY(-5deg) translateZ(${-5 - i * 1}px)`
-                  }}
-                />
-              ))}
-
-              {/* Right Page (Text Side) */}
+            {/* Right Page (Text Side) */}
+            {isOpen && (
               <motion.div
                 className="absolute inset-y-2 inset-x-2 left-0 bg-white rounded-r-sm shadow-inner cursor-grab active:cursor-grabbing z-10"
                 style={{
@@ -361,8 +480,8 @@ export default function MemoryBook() {
                   />
                 </AnimatePresence>
               </motion.div>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Page Turn Overlay */}
           <AnimatePresence>
@@ -372,7 +491,7 @@ export default function MemoryBook() {
                 initial={{ rotateY: turnDirection === 'next' ? -4 : -176 }}
                 animate={{ rotateY: turnDirection === 'next' ? -176 : -4 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
+                transition={{ duration: 1.0, ease: [0.25, 0.46, 0.45, 0.94] }}
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {/* Front of flipping page */}
@@ -492,7 +611,7 @@ function DiaryPageContent({ entry }: { entry: DiaryEntry }) {
         ))}
       </div>
 
-      <div className="mt-4 flex justify-end relative z-10">
+      <div className="mt-4 flex justify-end relative z-0">
         <span className="text-4xl filter drop-shadow-sm">
           {entry.emoji}
         </span>

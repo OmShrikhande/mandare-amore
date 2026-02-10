@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
+import { useTheme } from './ThemeContext';
 
 interface VideoItem {
   id: number;
@@ -144,11 +145,16 @@ function VideoCard({ item, index }: { item: VideoItem; index: number }) {
 }
 
 export default function VideoMemories() {
+  const { theme } = useTheme();
   const headerRef = useRef(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: '-50px' });
 
   return (
-    <section className="min-h-screen py-20 px-6 md:px-12 bg-gradient-to-br from-[#FFE4E1] via-[#FFF0F5] to-[#F8E8EE] relative overflow-hidden">
+    <section className="min-h-screen py-20 px-6 md:px-12 relative overflow-hidden" style={{
+      background: theme === 'dark'
+        ? 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%)'
+        : 'linear-gradient(135deg, #FFE4E1 0%, #FFF0F5 50%, #F8E8EE 100%)'
+    }}>
       {/* Floating romantic elements */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(15)].map((_, i) => (
@@ -187,14 +193,18 @@ export default function VideoMemories() {
           className="text-center mb-16"
         >
           <motion.h2
-            className="text-4xl md:text-5xl mb-6 text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
+            className={`text-4xl md:text-5xl mb-6 font-[var(--font-playfair)] leading-relaxed ${
+              theme === 'dark' ? 'text-white' : 'text-[#7B1E3B]'
+            }`}
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
             💕 Our Cherished Moments 💕
           </motion.h2>
           <motion.p
-            className="text-xl md:text-2xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed mb-4"
+            className={`text-xl md:text-2xl font-[var(--font-inter)] leading-relaxed mb-4 ${
+              theme === 'dark' ? 'text-white/90' : 'text-[#4E342E]'
+            }`}
             initial={{ opacity: 0 }}
             animate={isHeaderInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1.5, delay: 0.5 }}
@@ -202,7 +212,9 @@ export default function VideoMemories() {
             Videos that capture our love story
           </motion.p>
           <motion.p
-            className="text-lg md:text-xl text-[#7B1E3B] font-[var(--font-playfair)] italic"
+            className={`text-lg md:text-xl font-[var(--font-playfair)] italic ${
+              theme === 'dark' ? 'text-white/80' : 'text-[#7B1E3B]'
+            }`}
             initial={{ opacity: 0, y: 20 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1.5, delay: 1 }}

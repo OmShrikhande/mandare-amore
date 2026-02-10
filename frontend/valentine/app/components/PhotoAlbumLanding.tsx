@@ -56,6 +56,7 @@ export default function PhotoAlbumLanding({ onComplete }: PhotoAlbumLandingProps
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
   const [canProceed, setCanProceed] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const playSparkle = useSoundEffect('playSparkle');
 
   const slideVariants = {
@@ -171,15 +172,20 @@ export default function PhotoAlbumLanding({ onComplete }: PhotoAlbumLandingProps
                 animate="center"
                 exit="exit"
                 transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.2 },
-                  scale: { duration: 0.3 }
+                  x: { type: "spring", stiffness: 250, damping: 35 },
+                  opacity: { duration: 0.3 },
+                  scale: { duration: 0.4 }
                 }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.7}
-                onDragEnd={handleDragEnd}
-                className="relative h-64 sm:h-80 flex flex-col items-center justify-center text-center cursor-grab active:cursor-grabbing"
+                onDragStart={() => setIsDragging(true)}
+                onDragEnd={(event, info) => {
+                  setIsDragging(false);
+                  handleDragEnd(event, info);
+                }}
+                className={`relative h-64 sm:h-80 flex flex-col items-center justify-center text-center cursor-grab active:cursor-grabbing transition-transform duration-200 ${
+                  isDragging ? 'scale-95 brightness-110' : ''
+                }`}
               >
                 {/* Decorative Elements */}
                 <div className="absolute inset-0 pointer-events-none">
