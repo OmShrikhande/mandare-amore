@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import { Volume2, VolumeX, Play, Pause, Music } from 'lucide-react';
+import { getAudioUrl } from '../../lib/cloudinary';
 
 export default function BackgroundMusic() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -13,8 +14,9 @@ export default function BackgroundMusic() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    // Try to load the romantic background music
-    const audio = new Audio('/media/audio/romantic-background.mp3');
+    // Try to load the romantic background music from Cloudinary
+    const audioUrl = getAudioUrl('valentine/audio/romantic-background');
+    const audio = new Audio(audioUrl);
 
     // Fallback to a gentle piano melody if custom audio doesn't exist
     audio.addEventListener('error', () => {

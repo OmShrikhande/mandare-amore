@@ -3,10 +3,12 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { getOptimizedImageUrl } from '../../lib/cloudinary';
 
 interface AlbumItem {
   id: number;
   image: string;
+  imagePublicId?: string; // For Cloudinary images
   fallbackImage: string;
   text: string;
   title: string;
@@ -15,7 +17,8 @@ interface AlbumItem {
 const albumItems: AlbumItem[] = [
   {
     id: 1,
-    image: '/media/photos/memory-1.jpg',
+    image: '', // Will be set dynamically from Cloudinary
+    imagePublicId: 'valentine/photos/memory-1', // Replace with your Cloudinary public ID
     fallbackImage: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iMTAiIGZpbGw9IiNGRkU5RjciLz4KPHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeD0iNDAiIHk9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNjAiIGN5PSI2NSIgcj0iMzUiIGZpbGw9IiNGRkQ5RDciLz4KPGNpcmNsZSBjeD0iNDUiIGN5PSI1NSIgcj0iOCIgZmlsbD0iI0ZGRkZGRiIvPgo8Y2lyY2xlIGN4PSI3NSIgY3k9IjU1IiByPSI4IiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0gNDUgODAgUSB2MCA4NSA3NSA4NSIgc3Ryb2tlPSIjRkZEOURFIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8Y2lyY2xlIGN4PSI1NSIgY3k9IjEwNSIgcj0iMTUiIGZpbGw9IiNGRkQ5RDciLz4KPGNpcmNsZSBjeD0iNjUiIGN5PSIxMDUiIgcj0iMTUiIGZpbGw9IiNGRkQ5RDciLz4KPHRleHQgeD0iNjAiIHk9IjE0MCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBmaWxsPSIjN0IxRTNCIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5EdXVkdTwvdGV4dD4KPC9zdmc+Cjwvc3ZnPg==',
     text: 'My gunnu, just like Duudu, you\'re the most adorable and loving bear I know. Your gentle nature and sweet smile light up my world every single day. 💕',
     title: 'Duudu - My gunnu'
@@ -49,6 +52,9 @@ function AlbumCard({ item, index }: { item: AlbumItem; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
+  // Generate Cloudinary URL if public ID is provided
+  const imageUrl = item.imagePublicId ? getOptimizedImageUrl(item.imagePublicId, 400, 400) : item.image;
+
   return (
     <motion.div
       ref={ref}
@@ -76,7 +82,7 @@ function AlbumCard({ item, index }: { item: AlbumItem; index: number }) {
           style={{ backfaceVisibility: 'hidden' }}
         >
           <img
-            src={imageError ? item.fallbackImage : item.image}
+            src={imageError ? item.fallbackImage : imageUrl}
             alt={item.title}
             className="w-full h-full object-cover"
             onError={() => setImageError(true)}

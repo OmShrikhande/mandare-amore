@@ -2,39 +2,63 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
+import { getVideoUrl, getOptimizedImageUrl } from '../../lib/cloudinary';
 
 interface VideoItem {
   id: number;
-  video: string;
+  videoPublicId: string;
   title: string;
   description: string;
-  thumbnail?: string;
+  thumbnailPublicId?: string;
 }
 
 const videoItems: VideoItem[] = [
   {
     id: 1,
-    video: '/media/videos/romantic-moment.mp4',
+    videoPublicId: 'valentine/videos/romantic-moment', // Replace with your Cloudinary public ID
     title: 'Our First Dance',
     description: 'That magical moment when we first danced together, lost in each other\'s eyes 💃🕺',
-    thumbnail: '/media/photos/memory-1.jpg'
+    thumbnailPublicId: 'valentine/photos/memory-1' // Replace with your Cloudinary public ID
   },
   {
     id: 2,
-    video: '/media/videos/love-story.mp4',
+    videoPublicId: 'valentine/videos/love-story', // Replace with your Cloudinary public ID
     title: 'Our Love Story',
     description: 'A journey of love, laughter, and beautiful moments that brought us here 💑',
-    thumbnail: '/media/photos/memory-2.jpg'
+    thumbnailPublicId: 'valentine/photos/memory-2' // Replace with your Cloudinary public ID
   }
 ];
 
 function VideoCard({ item, index }: { item: VideoItem; index: number }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  // Generate Cloudinary URLs
+  const videoUrl = getVideoUrl(item.videoPublicId);
+  const thumbnailUrl = item.thumbnailPublicId ? getOptimizedImageUrl(item.thumbnailPublicId, 800, 450) : undefined;
+
+  useEffect(() => {
+    // Check if video exists on Cloudinary
+    const checkVideo = async () => {
+      try {
+        const response = await fetch(videoUrl, { method: 'HEAD' });
+        if (!response.ok) {
+          setVideoError(true);
+        }
+      } catch {
+        setVideoError(true);
+      }
+    };
+
+    if (videoUrl) {
+      checkVideo();
+    }
+  }, [videoUrl]);
 
   return (
     <motion.div
@@ -52,10 +76,10 @@ function VideoCard({ item, index }: { item: VideoItem; index: number }) {
         {!showVideo ? (
           <div className="absolute inset-0 flex items-center justify-center">
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setShowVideo(true)}
-              className="bg-white/90 backdrop-blur-sm rounded-full p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+              whileHover={{ scale: videoError ? 1 : 1.1 }}
+              whileTap={{ scale: videoError ? 1 : 0.95 }}
+              onClick={() => !videoError && setShowVideo(true)}
+              className={`bg-white/90 backdrop-blur-sm rounded-full p-6 shadow-lg transition-all duration-300 ${videoError ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-xl'}`}
             >
               <div className="relative">
                 <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center">
@@ -98,14 +122,23 @@ function VideoCard({ item, index }: { item: VideoItem; index: number }) {
               ))}
             </div>
           </div>
+        ) : videoError ? (
+          <div className="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-6xl mb-4">🎬</div>
+              <div className="text-pink-700 font-medium">Video coming soon</div>
+              <div className="text-sm text-pink-600 mt-2">Add your personal video to {item.title.toLowerCase()}</div>
+            </div>
+          </div>
         ) : (
           <video
-            src={item.video}
+            src={videoUrl}
             controls
             className="w-full h-full object-cover"
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
-            poster={item.thumbnail}
+            onError={() => setVideoError(true)}
+            poster={thumbnailUrl}
           />
         )}
 
