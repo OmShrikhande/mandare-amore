@@ -4,30 +4,29 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
-import { getVideoUrl, getOptimizedImageUrl } from '../../lib/cloudinary';
 
 interface VideoItem {
   id: number;
-  videoPublicId: string;
+  video: string;
   title: string;
   description: string;
-  thumbnailPublicId?: string;
+  thumbnail?: string;
 }
 
 const videoItems: VideoItem[] = [
   {
     id: 1,
-    videoPublicId: 'valentine/videos/romantic-moment', // Replace with your Cloudinary public ID
+    video: '/media/videos/romantic-moment.mp4',
     title: 'Our First Dance',
     description: 'That magical moment when we first danced together, lost in each other\'s eyes 💃🕺',
-    thumbnailPublicId: 'valentine/photos/memory-1' // Replace with your Cloudinary public ID
+    thumbnail: '/media/photos/memory-1.jpg'
   },
   {
     id: 2,
-    videoPublicId: 'valentine/videos/love-story', // Replace with your Cloudinary public ID
+    video: '/media/videos/love-story.mp4',
     title: 'Our Love Story',
     description: 'A journey of love, laughter, and beautiful moments that brought us here 💑',
-    thumbnailPublicId: 'valentine/photos/memory-2' // Replace with your Cloudinary public ID
+    thumbnail: '/media/photos/memory-2.jpg'
   }
 ];
 
@@ -37,28 +36,6 @@ function VideoCard({ item, index }: { item: VideoItem; index: number }) {
   const [videoError, setVideoError] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-
-  // Generate Cloudinary URLs
-  const videoUrl = getVideoUrl(item.videoPublicId);
-  const thumbnailUrl = item.thumbnailPublicId ? getOptimizedImageUrl(item.thumbnailPublicId, 800, 450) : undefined;
-
-  useEffect(() => {
-    // Check if video exists on Cloudinary
-    const checkVideo = async () => {
-      try {
-        const response = await fetch(videoUrl, { method: 'HEAD' });
-        if (!response.ok) {
-          setVideoError(true);
-        }
-      } catch {
-        setVideoError(true);
-      }
-    };
-
-    if (videoUrl) {
-      checkVideo();
-    }
-  }, [videoUrl]);
 
   return (
     <motion.div
@@ -132,13 +109,13 @@ function VideoCard({ item, index }: { item: VideoItem; index: number }) {
           </div>
         ) : (
           <video
-            src={videoUrl}
+            src={item.video}
             controls
             className="w-full h-full object-cover"
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             onError={() => setVideoError(true)}
-            poster={thumbnailUrl}
+            poster={item.thumbnail}
           />
         )}
 
