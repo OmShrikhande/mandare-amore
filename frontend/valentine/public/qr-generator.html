@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart QR Generator</title>
+    <script>
+        // Simple QR Code generator fallback
+        (function() {
+            // QR Code generation algorithm (simplified)
+            function generateQR(text, size) {
+                // This is a very basic QR code generator for demo purposes
+                // In production, you'd use a proper library
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+
+                // Fill with white background
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, size, size);
+
+                // Draw a simple pattern (not a real QR code)
+                ctx.fillStyle = 'black';
+                const moduleSize = size / 21; // Standard QR grid
+
+                // Draw finder patterns (corners)
+                drawFinderPattern(ctx, 0, 0, moduleSize);
+                drawFinderPattern(ctx, size - 7 * moduleSize, 0, moduleSize);
+                drawFinderPattern(ctx, 0, size - 7 * moduleSize, moduleSize);
+
+                // Simple data pattern based on text length
+                const data = text.length;
+                for (let i = 0; i < Math.min(data, 100); i++) {
+                    const x = (i % 10) * moduleSize + 10 * moduleSize;
+                    const y = Math.floor(i / 10) * moduleSize + 10 * moduleSize;
+                    if (x < size - 7 * moduleSize && y < size - 7 * moduleSize) {
+                        ctx.fillRect(x, y, moduleSize, moduleSize);
+                    }
+                }
+
+                return canvas;
+            }
+
+            function drawFinderPattern(ctx, x, y, moduleSize) {
+                // Outer square
+                ctx.fillRect(x, y, 7 * moduleSize, 7 * moduleSize);
+                // Inner white square
+                ctx.fillStyle = 'white';
+                ctx.fillRect(x + moduleSize, y + moduleSize, 5 * moduleSize, 5 * moduleSize);
+                // Inner black square
+                ctx.fillStyle = 'black';
+                ctx.fillRect(x + 2 * moduleSize, y + 2 * moduleSize, 3 * moduleSize, 3 * moduleSize);
+            }
+
+            // Make it available globally
+            window.SimpleQR = { generate: generateQR };
+        })();
+    </script>
+    <script src="https://unpkg.com/qrcode-generator@1.4.4/qrcode.js"></script>
+    <script>
+        // Wrapper to make it compatible with QRCode.toCanvas
+        if (typeof qrcode !== 'undefined') {
+            window.QRCode = {
+                toCanvas: function(canvas, text, options, callback) {
+                    try {
+                        // qrcode(typeNumber, errorCorrectionLevel)
+                        // typeNumber: 0 = auto, errorCorrectionLevel: 'L','M','Q','H'
+                        const errorLevel = options.errorCorrectionLevel || 'M';
+                        const typeNumber = options.typeNumber || 0;
+
+                        const qr = qrcode(typeNumber, errorLevel);
+                        qr.addData(text);
+                        qr.make();
+
+                        const ctx = canvas.getContext('2d');
+                        const size = canvas.width;
+                        const moduleCount = qr.getModuleCount();
+                        const cellSize = size / moduleCount;
+
+                        // Fill background
+                        ctx.fillStyle = options.color?.light || '#FFFFFF';
+                        ctx.fillRect(0, 0, size, size);
+
+                        // Draw modules
+                        ctx.fillStyle = options.color?.dark || '#000000';
+                        for (let row = 0; row < moduleCount; row++) {
+                            for (let col = 0; col < moduleCount; col++) {
+                                if (qr.isDark(row, col)) {
+                                    ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+                                }
+                            }
+                        }
+
+                        if (callback) callback(null);
+                    } catch (error) {
+                        console.error('QR Code generation error:', error);
+                        if (callback) callback(error);
+                    }
+                }
+            };
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 50%, #fce7f3 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff69b4;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .qr-heart {
+            position: relative;
+            width: 350px;
+            height: 300px;
+            margin: 3px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heart-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        #qrcode {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #qrcode canvas {
+            display: block !important;
+        }
+
+        input[type="url"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="url"]:focus {
+            border-color: #ff69b4;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💖 Heart QR Generator 💖</h1>
+
+        <div id="input-section">
+            <input type="url" id="url-input" placeholder="Enter your link (https://...)" />
+            <button onclick="generateQR()">Generate Heart QR Code</button>
+        </div>
+
+        <div id="qr-section" class="hidden fade-in">
+            <div class="qr-heart">
+                <svg class="heart-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff69b4;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff1493;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M50,85 C50,85 15,60 15,40 C15,25 25,15 35,15 C42,15 47,20 50,25 C53,20 58,15 65,15 C75,15 85,25 85,40 C85,60 50,85 50,85 Z" 
+                          fill="url(#heartGradient)" 
+                          filter="drop-shadow(0px 5px 15px rgba(255, 105, 180, 0.4))"/>
+                </svg>
+                <canvas id="qr-canvas" style="display: none;"></canvas>
+                <div id="qrcode"></div>
+            </div>
+            <p style="color: #666; margin: 20px 0;">Scan this QR code!</p>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button onclick="downloadQR()">Download QR Code</button>
+                <button onclick="reset()">Generate Another</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let qrCanvas = null;
+        let heartCanvas = null;
+
+        function generateQR() {
+            const url = document.getElementById('url-input').value.trim();
+            if (!url) {
+                alert('Please enter a valid URL');
+                return;
+            }
+
+            const qrContainer = document.getElementById('qrcode');
+            const canvas = document.getElementById('qr-canvas');
+
+            // Clear previous content
+            qrContainer.innerHTML = '';
+
+            // Try to use QRCode library, fallback to simple generator
+            if (typeof QRCode !== 'undefined') {
+                // Generate QR code on canvas for download
+                QRCode.toCanvas(canvas, url, {
+                    width: 512,
+                    height: 512,
+                    color: {
+                        dark: '#FF69B4',
+                        light: '#FF0085'
+                    }
+                }, function (error) {
+                    if (error) {
+                        console.error(error);
+                        alert('Error generating QR code. Please try again.');
+                        return;
+                    }
+
+                    // Create square QR code for display
+                    createSquareQR(canvas, qrContainer);
+
+                    // Show QR section, hide input section
+                    document.getElementById('input-section').classList.add('hidden');
+                    document.getElementById('qr-section').classList.remove('hidden');
+                });
+            } else {
+                // Fallback to simple QR generator
+                const simpleCanvas = window.SimpleQR.generate(url, 512);
+                canvas.getContext('2d').drawImage(simpleCanvas, 0, 0);
+
+                // Create square QR code for display
+                createSquareQR(canvas, qrContainer);
+
+                // Show QR section, hide input section
+                document.getElementById('input-section').classList.add('hidden');
+                document.getElementById('qr-section').classList.remove('hidden');
+            }
+        }
+
+        function createSquareQR(sourceCanvas, targetContainer) {
+            // Create a new canvas for the square QR (rotated 45 degrees)
+            const squareCanvas = document.createElement('canvas');
+            squareCanvas.width = 180;
+            squareCanvas.height = 180;
+            const ctx = squareCanvas.getContext('2d');
+
+            // Rotate by 45 degrees from center
+            ctx.save();
+            ctx.translate(90, 90);
+            ctx.rotate(45 * Math.PI / 180);
+
+            // Draw QR code centered
+            const qrSize = 120;
+            ctx.drawImage(sourceCanvas, -qrSize/2, -qrSize/2, qrSize, qrSize);
+            ctx.restore();
+
+            // Add the canvas to the container
+            targetContainer.appendChild(squareCanvas);
+        }
+
+        function downloadQR() {
+            const canvas = document.getElementById('qr-canvas');
+            if (!canvas) return;
+
+            // Create heart-shaped download image
+            const downloadCanvas = document.createElement('canvas');
+            downloadCanvas.width = 512;
+            downloadCanvas.height = 512;
+            const ctx = downloadCanvas.getContext('2d');
+
+            // Scale factor for the heart path
+            const scale = 512 / 24;
+            ctx.save();
+            ctx.beginPath();
+
+            // Heart shape path (scaled)
+            ctx.moveTo(12 * scale, 21.35 * scale);
+            ctx.lineTo(10.55 * scale, 20.03 * scale);
+            ctx.bezierCurveTo(
+                5.4 * scale, 15.36 * scale,
+                2 * scale, 12.28 * scale,
+                2 * scale, 8.5 * scale
+            );
+            ctx.bezierCurveTo(
+                2 * scale, 5.42 * scale,
+                4.42 * scale, 3 * scale,
+                7.5 * scale, 3 * scale
+            );
+            ctx.bezierCurveTo(
+                9.24 * scale, 3 * scale,
+                10.91 * scale, 3.81 * scale,
+                12 * scale, 5.09 * scale
+            );
+            ctx.bezierCurveTo(
+                13.09 * scale, 3.81 * scale,
+                14.76 * scale, 3 * scale,
+                16.5 * scale, 3 * scale
+            );
+            ctx.bezierCurveTo(
+                19.58 * scale, 3 * scale,
+                22 * scale, 5.42 * scale,
+                22 * scale, 8.5 * scale
+            );
+            ctx.bezierCurveTo(
+                22 * scale, 12.28 * scale,
+                18.6 * scale, 15.36 * scale,
+                13.45 * scale, 20.03 * scale
+            );
+            ctx.lineTo(12 * scale, 21.35 * scale);
+            ctx.closePath();
+
+            // Fill with gradient
+            const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+            gradient.addColorStop(0, '#ff69b4');
+            gradient.addColorStop(1, '#ff1493');
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            // Draw QR code on top (centered, sized, and rotated 45 degrees)
+            ctx.save();
+            ctx.translate(256, 256);
+            ctx.rotate(45 * Math.PI / 180);
+            ctx.drawImage(canvas, -90, -90, 180, 180);
+            ctx.restore();
+
+            ctx.restore();
+
+            // Download the image
+            const link = document.createElement('a');
+            link.download = 'heart-qr-code.png';
+            link.href = downloadCanvas.toDataURL();
+            link.click();
+        }
+
+
+
+        function reset() {
+            document.getElementById('url-input').value = '';
+            document.getElementById('qr-section').classList.add('hidden');
+            document.getElementById('input-section').classList.remove('hidden');
+        }
+
+        // Allow Enter key to generate
+        document.getElementById('url-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateQR();
+            }
+        });
+    </script>
+</body>
+</html>

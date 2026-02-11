@@ -190,7 +190,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
             } : {}}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            My dearest gunnu 💕
+            My dearest butki 💕
           </motion.h1>
 
           {textPhase >= 1 && (

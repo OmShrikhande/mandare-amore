@@ -32,7 +32,7 @@ export default function PersonalMessage() {
             theme === 'dark' ? 'text-white' : 'text-[#7B1E3B]'
           }`}
         >
-          My gunnu, just me speaking from my heart.
+          My butki, just me speaking from my heart.
         </motion.p>
 
         <motion.div
@@ -58,11 +58,11 @@ export default function PersonalMessage() {
             className="text-left"
           >
             <p className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed mb-4">
-              My beautiful gunnu, I don&apos;t say this enough, but loving you feels like the most peaceful joy. And that gentle calm means more
+              My beautiful butki, I don&apos;t say this enough, but loving you feels like the most peaceful joy. And that gentle calm means more
               to me than any excitement ever could.
             </p>
             <p className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed">
-              I don&apos;t need grand gestures, my gunnu. I just need you, exactly as you are - wonderfully unique and perfectly you.
+              I don&apos;t need grand gestures, my butki. I just need you, exactly as you are - wonderfully unique and perfectly you.
             </p>
           </motion.div>
 

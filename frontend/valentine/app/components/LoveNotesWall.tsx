@@ -15,49 +15,49 @@ interface Note {
 const notes: Note[] = [
   {
     id: 1,
-    text: 'My gunnu, you make every day feel like a beautiful adventure',
+    text: 'My butki, you make every day feel like a beautiful adventure',
     rotation: -2,
     color: '#FFF9C4',
   },
   {
     id: 2,
-    text: 'Being with you, gunnu, feels like coming home to paradise',
+    text: 'Being with you, butki, feels like coming home to paradise',
     rotation: 3,
     color: '#F8BBD0',
   },
   {
     id: 3,
-    text: "gunnu, you're so wonderfully unique - that's your magic",
+    text: "butki, you're so wonderfully unique - that's your magic",
     rotation: -4,
     color: '#E1BEE7',
   },
   {
     id: 4,
-    text: "My heart finds peace in your gentle presence, gunnu",
+    text: "My heart finds peace in your gentle presence, butki",
     rotation: 2,
     color: '#FFCCBC',
   },
   {
     id: 5,
-    text: 'gunnu, your smile could light up the darkest night',
+    text: 'butki, your smile could light up the darkest night',
     rotation: -3,
     color: '#C5E1A5',
   },
   {
     id: 6,
-    text: "Every moment with you feels like a precious gift, my gunnu",
+    text: "Every moment with you feels like a precious gift, my butki",
     rotation: 4,
     color: '#B3E5FC',
   },
   {
     id: 7,
-    text: 'gunnu, you inspire me to be the best version of myself',
+    text: 'butki, you inspire me to be the best version of myself',
     rotation: -1,
     color: '#FFECB3',
   },
   {
     id: 8,
-    text: "I'm endlessly grateful for your love, my beautiful gunnu",
+    text: "I'm endlessly grateful for your love, my beautiful butki",
     rotation: 2,
     color: '#F8BBD0',
   },
@@ -217,7 +217,7 @@ export default function LoveNotesWall() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            💌 Love Notes for My gunnu 💌
+            💌 Love Notes for My butki 💌
           </motion.h2>
           <motion.p
             className={`text-xl md:text-2xl font-[var(--font-inter)] leading-relaxed mb-4 ${
