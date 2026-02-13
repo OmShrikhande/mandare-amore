@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { useTheme } from './ThemeContext';
 
 interface Note {
@@ -68,6 +68,15 @@ function StickyNote({ note, index }: { note: Note; index: number }) {
   const isInView = useInView(ref, { once: true, margin: '-50px' });
   const [isHovered, setIsHovered] = useState(false);
 
+  // Memoize sparkles for consistent render
+  const sparkles = useMemo(() => {
+    return [...Array(6)].map((_, i) => ({
+      left: `${15 + i * 15}%`,
+      top: `${20 + (i % 2) * 40}%`,
+      delay: i * 0.1,
+    }));
+  }, []);
+
   return (
     <motion.div
       ref={ref}
@@ -103,7 +112,7 @@ function StickyNote({ note, index }: { note: Note; index: number }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
-          {[...Array(6)].map((_, i) => (
+          {sparkles.map((sparkle, i) => (
             <motion.div
               key={i}
               initial={{ scale: 0, opacity: 0 }}
@@ -114,14 +123,14 @@ function StickyNote({ note, index }: { note: Note; index: number }) {
               }}
               transition={{
                 duration: 1.5,
-                delay: i * 0.1,
+                delay: sparkle.delay,
                 repeat: Infinity,
                 repeatDelay: 0.5
               }}
               className="absolute text-lg"
               style={{
-                left: `${15 + i * 15}%`,
-                top: `${20 + (i % 2) * 40}%`
+                left: sparkle.left,
+                top: sparkle.top
               }}
             >
               ✨
@@ -143,7 +152,7 @@ function StickyNote({ note, index }: { note: Note; index: number }) {
       </motion.div>
 
       <motion.p
-        className="text-lg md:text-xl font-[var(--font-caveat)] text-[#4E342E] leading-relaxed relative z-10"
+        className="text-lg md:text-xl font-(--font-caveat) text-[#4E342E] leading-relaxed relative z-10"
         animate={isHovered ? { scale: 1.02 } : { scale: 1 }}
         transition={{ duration: 0.3 }}
       >
@@ -167,6 +176,16 @@ export default function LoveNotesWall() {
   const headerRef = useRef(null);
   const isHeaderInView = useInView(headerRef, { once: true });
 
+  const floatingElements = useMemo(() => {
+    return [...Array(15)].map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      top: `${10 + Math.random() * 70}%`,
+      duration: 6 + Math.random() * 3,
+      delay: Math.random() * 4,
+      emoji: ['💌', '💕', '💖', '💗', '💓', '💘', '🌹', '🌸', '🌷', '✨'][i % 10]
+    }));
+  }, []);
+
   return (
     <section className="min-h-screen py-20 px-6 md:px-12 relative overflow-hidden" style={{
       background: theme === 'dark'
@@ -175,7 +194,7 @@ export default function LoveNotesWall() {
     }}>
       {/* Valentine's themed floating elements */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {floatingElements.map((el, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0, rotate: 0 }}
@@ -186,18 +205,18 @@ export default function LoveNotesWall() {
               y: [0, -150, -300]
             }}
             transition={{
-              duration: 6 + Math.random() * 3,
-              delay: Math.random() * 4,
+              duration: el.duration,
+              delay: el.delay,
               repeat: Infinity,
               ease: 'easeInOut'
             }}
             className="absolute text-2xl"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${10 + Math.random() * 70}%`
+              left: el.left,
+              top: el.top
             }}
           >
-            {['💌', '💕', '💖', '💗', '💓', '💘', '🌹', '🌸', '🌷', '✨'][i % 10]}
+            {el.emoji}
           </motion.div>
         ))}
       </div>
@@ -211,7 +230,7 @@ export default function LoveNotesWall() {
           className="text-center mb-16"
         >
           <motion.h2
-            className={`text-4xl md:text-5xl mb-6 font-[var(--font-playfair)] leading-relaxed ${
+            className={`text-4xl md:text-5xl mb-6 font-(--font-playfair) leading-relaxed ${
               theme === 'dark' ? 'text-white' : 'text-[#7B1E3B]'
             }`}
             animate={{ scale: [1, 1.02, 1] }}
@@ -220,7 +239,7 @@ export default function LoveNotesWall() {
             💌 Love Notes for My butki 💌
           </motion.h2>
           <motion.p
-            className={`text-xl md:text-2xl font-[var(--font-inter)] leading-relaxed mb-4 ${
+            className={`text-xl md:text-2xl font-(--font-inter) leading-relaxed mb-4 ${
               theme === 'dark' ? 'text-white/90' : 'text-[#4E342E]'
             }`}
             initial={{ opacity: 0 }}
@@ -230,7 +249,7 @@ export default function LoveNotesWall() {
             Every note is a piece of my heart, written just for you
           </motion.p>
           <motion.p
-            className={`text-lg md:text-xl font-[var(--font-playfair)] italic ${
+            className={`text-lg md:text-xl font-(--font-playfair) italic ${
               theme === 'dark' ? 'text-white/80' : 'text-[#7B1E3B]'
             }`}
             initial={{ opacity: 0, y: 20 }}

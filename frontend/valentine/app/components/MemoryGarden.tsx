@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 
 interface Memory {
   id: number;
@@ -65,7 +65,7 @@ function MemoryCard({ memory, index }: { memory: Memory; index: number }) {
       }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="bg-gradient-to-br from-white/80 to-[#F7C6D0]/30 backdrop-blur-sm p-8 rounded-3xl shadow-lg transition-all duration-700 cursor-pointer relative overflow-hidden"
+      className="bg-linear-to-br from-white/80 to-[#F7C6D0]/30 backdrop-blur-sm p-8 rounded-3xl shadow-lg transition-all duration-700 cursor-pointer relative overflow-hidden"
     >
       {/* Floating hearts animation on hover */}
       {isHovered && (
@@ -110,7 +110,7 @@ function MemoryCard({ memory, index }: { memory: Memory; index: number }) {
       </motion.div>
 
       <motion.h3
-        className="text-2xl md:text-3xl mb-4 text-[#7B1E3B] font-[var(--font-playfair)] relative z-10"
+        className="text-2xl md:text-3xl mb-4 text-[#7B1E3B] font-(--font-playfair) relative z-10"
         animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
         transition={{ duration: 0.3 }}
       >
@@ -118,7 +118,7 @@ function MemoryCard({ memory, index }: { memory: Memory; index: number }) {
       </motion.h3>
 
       <motion.p
-        className="text-base md:text-lg text-[#4E342E] font-[var(--font-inter)] leading-relaxed relative z-10"
+        className="text-base md:text-lg text-[#4E342E] font-(--font-inter) leading-relaxed relative z-10"
         animate={isHovered ? { y: -2 } : { y: 0 }}
         transition={{ duration: 0.3 }}
       >
@@ -141,11 +141,22 @@ export default function MemoryGarden() {
   const headerRef = useRef(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: '-50px' });
 
+  // Memoize floating elements to avoid Math.random in render
+  const floatingElements = useState(() => {
+    return [...Array(12)].map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      top: `${20 + Math.random() * 60}%`,
+      duration: 8 + Math.random() * 4,
+      delay: Math.random() * 5,
+      emoji: ['🌸', '💕', '✨', '🌹', '💖', '🌷'][i % 6]
+    }));
+  })[0];
+
   return (
-    <section className="min-h-screen py-20 px-6 md:px-12 bg-gradient-to-br from-[#FFF6EB] via-[#F7E5D7] to-[#FFE4E1] relative overflow-hidden">
+    <section className="min-h-screen py-20 px-6 md:px-12 bg-linear-to-br from-[#FFF6EB] via-[#F7E5D7] to-[#FFE4E1] relative overflow-hidden">
       {/* Floating romantic elements */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(12)].map((_, i) => (
+        {floatingElements.map((el, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0 }}
@@ -155,18 +166,18 @@ export default function MemoryGarden() {
               y: [0, -100, -200]
             }}
             transition={{
-              duration: 8 + Math.random() * 4,
-              delay: Math.random() * 5,
+              duration: el.duration,
+              delay: el.delay,
               repeat: Infinity,
               ease: 'easeInOut'
             }}
             className="absolute text-3xl"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${20 + Math.random() * 60}%`
+              left: el.left,
+              top: el.top
             }}
           >
-            {['🌸', '💕', '✨', '🌹', '💖', '🌷'][i % 6]}
+            {el.emoji}
           </motion.div>
         ))}
       </div>
@@ -180,14 +191,14 @@ export default function MemoryGarden() {
           className="text-center mb-16"
         >
           <motion.h2
-            className="text-4xl md:text-5xl mb-6 text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
+            className="text-4xl md:text-5xl mb-6 text-[#7B1E3B] font-(--font-playfair) leading-relaxed"
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
             💕 My Dearest butki 💕
           </motion.h2>
           <motion.p
-            className="text-xl md:text-2xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed mb-4"
+            className="text-xl md:text-2xl text-[#4E342E] font-(--font-inter) leading-relaxed mb-4"
             initial={{ opacity: 0 }}
             animate={isHeaderInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1.5, delay: 0.5 }}
@@ -195,7 +206,7 @@ export default function MemoryGarden() {
             This Valentine&apos;s Day is our once-in-a-lifetime moment
           </motion.p>
           <motion.p
-            className="text-lg md:text-xl text-[#7B1E3B] font-[var(--font-playfair)] italic"
+            className="text-lg md:text-xl text-[#7B1E3B] font-(--font-playfair) italic"
             initial={{ opacity: 0, y: 20 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1.5, delay: 1 }}

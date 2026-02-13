@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Moon, Sun } from 'lucide-react';
 import PhotoAlbumLanding from './components/PhotoAlbumLanding';
@@ -8,10 +8,11 @@ import MemoryBook from './components/MemoryBook';
 import LoveNotesWall from './components/LoveNotesWall';
 import AlbumSection from './components/AlbumSection';
 import VideoMemories from './components/VideoMemories';
-import ComfortSection from './components/ComfortSection';
 import PersonalMessage from './components/PersonalMessage';
 import FinalClosing from './components/FinalClosing';
 import SectionTransition from './components/SectionTransition';
+//import ComfortSection from './components/ComfortSection';
+//import QRHeartGenerator from './components/QRHeartGenerator';
 import { ThemeProvider, useTheme } from './components/ThemeContext';
 
 function HomeContent() {
@@ -21,6 +22,32 @@ function HomeContent() {
   const handleNext = () => {
     setShowLanding(false);
   };
+
+  // Memoize floating emojis to avoid Math.random in render
+  const floatingEmojis = useMemo(() => {
+    const darkEmojis = ['✨', '⭐', '🌙', '💎', '🌟', '💫', '🌙'];
+    const lightEmojis = ['💖', '💕', '🍫', '🍬', '🧸', '🌸', '💝', '🌹'];
+    
+    return [...Array(25)].map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      xOffset: Math.random() * 20 - 10,
+      duration: 3 + Math.random() * 2,
+      delay: Math.random() * 2,
+      darkEmoji: darkEmojis[i % darkEmojis.length],
+      lightEmoji: lightEmojis[i % lightEmojis.length]
+    }));
+  }, []);
+
+  // Memoize golden accents for dark mode
+  const goldAccents = useMemo(() => {
+    return [...Array(8)].map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      duration: 3 + Math.random() * 2,
+      delay: Math.random() * 3,
+    }));
+  }, []);
 
   return (
     <main className="relative min-h-screen" style={{
@@ -50,31 +77,28 @@ function HomeContent() {
       {/* Floating Emojis */}
       {!showLanding && (
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-10">
-          {[...Array(theme === 'dark' ? 25 : 15)].map((_, i) => (
+          {floatingEmojis.slice(0, theme === 'dark' ? 25 : 15).map((emoji, i) => (
             <motion.div
               key={i}
               className="absolute text-3xl"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: emoji.left,
+                top: emoji.top,
               }}
               animate={{
                 y: [0, -25, 0],
-                x: [0, Math.random() * 20 - 10, 0],
+                x: [0, emoji.xOffset, 0],
                 rotate: [0, theme === 'dark' ? 360 : 15, theme === 'dark' ? 0 : -15, 0],
                 scale: [1, theme === 'dark' ? 1.3 : 1.1, 1],
               }}
               transition={{
-                duration: theme === 'dark' ? 4 + Math.random() * 3 : 3 + Math.random() * 2,
+                duration: theme === 'dark' ? emoji.duration + 1 : emoji.duration,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: emoji.delay,
                 ease: 'easeInOut',
               }}
             >
-              {theme === 'dark'
-                ? [ '✨', '⭐', '🌙', '💎', '🌟', '💫', '🌙'][Math.floor(Math.random() * 39)]
-                : ['💖', '💕', '🍫', '🍬', '🧸', '🌸', '💝', '🌹'][Math.floor(Math.random() * 36)]
-              }
+              {theme === 'dark' ? emoji.darkEmoji : emoji.lightEmoji}
             </motion.div>
           ))}
         </div>
@@ -83,13 +107,13 @@ function HomeContent() {
       {/* Dark Mode Golden Accents */}
       {theme === 'dark' && !showLanding && (
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-5">
-          {[...Array(8)].map((_, i) => (
+          {goldAccents.map((accent, i) => (
             <motion.div
               key={`gold-${i}`}
               className="absolute w-1 h-1 rounded-full"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: accent.left,
+                top: accent.top,
                 background: 'linear-gradient(45deg, #fbbf24, #f59e0b, #d97706)',
                 boxShadow: '0 0 10px rgba(251, 191, 36, 0.5)',
               }}
@@ -98,9 +122,9 @@ function HomeContent() {
                 scale: [0, 1.5, 0],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: accent.duration,
                 repeat: Infinity,
-                delay: Math.random() * 3,
+                delay: accent.delay,
                 ease: 'easeInOut',
               }}
             />
@@ -120,6 +144,12 @@ function HomeContent() {
             }}>
               <SectionTransition delay={0.1}>
                 <MemoryBook />
+              </SectionTransition>
+            </section>
+
+            <section className="snap-start">
+              <SectionTransition delay={0.15}>
+                <AlbumSection />
               </SectionTransition>
             </section>
 

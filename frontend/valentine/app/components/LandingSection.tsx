@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSoundEffect } from './SoundEffects';
 
 interface FloatingHeart {
@@ -33,15 +33,32 @@ interface LandingSectionProps {
   onNext: () => void;
 }
 
+interface Sparkle {
+  id: number;
+  left: string;
+  top: string;
+  duration: number;
+  delay: number;
+}
+
+const generateSparkles = (): Sparkle[] => {
+  return Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+    duration: 3 + Math.random() * 2,
+    delay: Math.random() * 2,
+  }));
+};
+
 export default function LandingSection({ onNext }: LandingSectionProps) {
-  const [hearts, setHearts] = useState<FloatingHeart[]>([]);
+  const [hearts] = useState(generateHearts);
+  const [sparkles] = useState(generateSparkles);
   const [showSparkles, setShowSparkles] = useState(false);
   const [textPhase, setTextPhase] = useState(0);
   const playSparkle = useSoundEffect('playSparkle');
 
   useEffect(() => {
-    setHearts(generateHearts());
-
     // Progressive text animation
     const timer1 = setTimeout(() => setTextPhase(1), 1000);
     const timer2 = setTimeout(() => setTextPhase(2), 3000);
@@ -135,13 +152,13 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
         ))}
 
         {/* Romantic sparkles */}
-        {showSparkles && [...Array(20)].map((_, i) => (
+        {showSparkles && sparkles.map((sparkle) => (
           <motion.div
-            key={`sparkle-${i}`}
+            key={`sparkle-${sparkle.id}`}
             className="absolute text-lg"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: sparkle.left,
+              top: sparkle.top,
             }}
             initial={{ scale: 0, opacity: 0, rotate: 0 }}
             animate={{
@@ -150,8 +167,8 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
               rotate: [0, 180, 360],
             }}
             transition={{
-              duration: 3 + Math.random() * 2,
-              delay: Math.random() * 2,
+              duration: sparkle.duration,
+              delay: sparkle.delay,
               repeat: Infinity,
               ease: 'easeInOut',
             }}
@@ -180,7 +197,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
           className="mb-8"
         >
           <motion.h1
-            className="text-4xl md:text-6xl mb-4 text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
+            className="text-4xl md:text-6xl mb-4 text-[#7B1E3B] font-(--font-playfair) leading-relaxed"
             animate={textPhase >= 1 ? {
               textShadow: [
                 '0 0 0px rgba(123, 30, 59, 0)',
@@ -198,7 +215,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.5, delay: 0.5 }}
-              className="text-xl md:text-2xl text-[#4E342E] font-[var(--font-inter)] italic mb-6"
+              className="text-xl md:text-2xl text-[#4E342E] font-(--font-inter) italic mb-6"
             >
               This isn&apos;t just a website...
             </motion.p>
@@ -209,7 +226,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 2, delay: 0.5 }}
-              className="text-2xl md:text-4xl text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed mb-8"
+              className="text-2xl md:text-4xl text-[#7B1E3B] font-(--font-playfair) leading-relaxed mb-8"
             >
               It&apos;s my heart speaking to yours 💖
             </motion.p>
@@ -223,14 +240,14 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
               className="space-y-4"
             >
               <motion.p
-                className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)]"
+                className="text-lg md:text-xl text-[#4E342E] font-(--font-inter)"
                 animate={{ scale: [1, 1.02, 1] }}
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               >
                 Every beat, every moment, every dream...
               </motion.p>
               <motion.p
-                className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)] italic"
+                className="text-lg md:text-xl text-[#4E342E] font-(--font-inter) italic"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 2, delay: 1 }}
@@ -251,7 +268,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
           >
             {/* Button glow effect */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-pink-200/30 to-purple-200/30 rounded-full blur-xl"
+              className="absolute inset-0 bg-linear-to-r from-pink-200/30 to-purple-200/30 rounded-full blur-xl"
               animate={{
                 scale: [1, 1.1, 1],
                 opacity: [0.3, 0.6, 0.3]
@@ -269,7 +286,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
                 playSparkle();
                 onNext();
               }}
-              className="relative px-12 py-6 bg-gradient-to-r from-[#F7C6D0] to-[#E6B566] text-[#7B1E3B] rounded-full text-xl font-[var(--font-playfair)] font-semibold shadow-2xl hover:shadow-3xl transition-all duration-700 overflow-hidden"
+              className="relative px-12 py-6 bg-linear-to-r from-[#F7C6D0] to-[#E6B566] text-[#7B1E3B] rounded-full text-xl font-(--font-playfair) shadow-2xl hover:shadow-3xl transition-all duration-700 overflow-hidden"
             >
               {/* Button sparkles */}
               <div className="absolute inset-0 pointer-events-none">
@@ -305,7 +322,7 @@ export default function LandingSection({ onNext }: LandingSectionProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 2, delay: 2 }}
-              className="text-sm text-[#4E342E] font-[var(--font-inter)] mt-4 italic"
+              className="text-sm text-[#4E342E] font-(--font-inter) mt-4 italic"
             >
               Take your time, my love... this is forever 💫
             </motion.p>

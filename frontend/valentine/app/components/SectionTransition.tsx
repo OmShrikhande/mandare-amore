@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 
 interface SectionTransitionProps {
   children: React.ReactNode;
@@ -12,6 +12,16 @@ interface SectionTransitionProps {
 export default function SectionTransition({ children, delay = 0 }: SectionTransitionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const hearts = useMemo(() => {
+    return [...Array(12)].map((_, i) => ({
+      left: `${15 + Math.random() * 70}%`,
+      top: `${20 + Math.random() * 60}%`,
+      duration: 2.5 + Math.random() * 1.5,
+      delay: Math.random() * 1.2,
+      emoji: ['💕', '💖', '💗', '💓', '💘', '💕'][i % 6]
+    }));
+  }, []);
 
   return (
     <motion.div
@@ -40,13 +50,13 @@ export default function SectionTransition({ children, delay = 0 }: SectionTransi
       {/* Romantic floating hearts */}
       {isInView && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(12)].map((_, i) => (
+          {hearts.map((heart, i) => (
             <motion.div
               key={i}
               className="absolute text-xl"
               style={{
-                left: `${15 + Math.random() * 70}%`,
-                top: `${20 + Math.random() * 60}%`
+                left: heart.left,
+                top: heart.top
               }}
               initial={{
                 scale: 0,
@@ -60,14 +70,14 @@ export default function SectionTransition({ children, delay = 0 }: SectionTransi
                 rotate: [0, 90, 180]
               }}
               transition={{
-                duration: 2.5 + Math.random() * 1.5,
-                delay: Math.random() * 1.2,
+                duration: heart.duration,
+                delay: heart.delay,
                 ease: 'easeOut',
                 repeat: Infinity,
                 repeatDelay: 3
               }}
             >
-              {['💕', '💖', '💗', '💓', '💘', '💕'][i % 6]}
+              {heart.emoji}
             </motion.div>
           ))}
         </div>
@@ -75,7 +85,7 @@ export default function SectionTransition({ children, delay = 0 }: SectionTransi
 
       {/* Soft romantic shimmer effect */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-pink-50/40 via-transparent to-purple-50/40 rounded-2xl"
+        className="absolute inset-0 bg-linear-to-br from-pink-50/40 via-transparent to-purple-50/40 rounded-2xl"
         initial={{ opacity: 0 }}
         animate={isInView ? {
           opacity: [0, 0.2, 0]

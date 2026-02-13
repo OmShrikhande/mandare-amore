@@ -2,184 +2,87 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import ReactPlayer from 'react-player';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import { useTheme } from './ThemeContext';
 
-interface VideoItem {
-  id: number;
-  video: string;
+interface Photo {
+  src: string;
   title: string;
-  description: string;
-  thumbnail?: string;
+  alt?: string;
 }
 
-const videoItems: VideoItem[] = [
-  {
-    id: 1,
-    video: '/media/videos/romantic-moment.mp4',
-    title: 'Our First Dance',
-    description: 'That magical moment when we first danced together, lost in each other\'s eyes 💃🕺',
-    thumbnail: '/media/photos/memory-1.jpg'
-  },
-  {
-    id: 2,
-    video: '/media/videos/love-story.mp4',
-    title: 'Our Love Story',
-    description: 'A journey of love, laughter, and beautiful moments that brought us here 💑',
-    thumbnail: '/media/photos/memory-2.jpg'
-  }
+const photos: Photo[] = [
+  { src: '/media/photos/her-1.jpg', title: 'Beautiful You', alt: 'Her smile' },
+  { src: '/media/photos/together-1.jpg', title: 'Our Moments', alt: 'Us together' },
+  { src: '/media/photos/her-2.jpg', title: 'Sweetest Smile', alt: 'Her smile 2' },
+  { src: '/media/photos/together-2.jpg', title: 'Us Together', alt: 'Holding hands' },
+  { src: '/media/photos/her-3.jpg', title: 'Graceful', alt: 'Graceful portrait' },
+  { src: '/media/photos/together-3.jpg', title: 'Holding Hands', alt: 'Holding hands close' },
+  { src: '/media/photos/her-4.jpg', title: 'Stunning', alt: 'Stunning portrait' },
+  { src: '/media/photos/together-4.jpg', title: 'Pure Joy', alt: 'Laughing together' },
+  { src: '/media/photos/loved one.jpg', title: 'My Loved One', alt: 'Loved one' },
+  { src: '/media/photos/kissing.jpg', title: 'Sweet Kisses', alt: 'Kissing' },
+  { src: '/media/photos/sleeping.jpg', title: 'Peaceful Sleep', alt: 'Sleeping' },
+  { src: '/media/photos/teasing.jpg', title: 'Playful Teasing', alt: 'Teasing' },
+  { src: '/media/photos/walking.jpg', title: 'Walking Together', alt: 'Walking' },
+  { src: '/media/photos/her-5.jpg', title: 'Radiant', alt: 'Her radiance' },
+  { src: '/media/photos/together-5.jpg', title: 'Soulmates', alt: 'Together forever' },
+  { src: '/media/photos/her-6.jpg', title: 'Angelic', alt: 'Angelic look' },
 ];
-
-function VideoCard({ item, index }: { item: VideoItem; index: number }) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [showVideo, setShowVideo] = useState(false);
-  const [videoError, setVideoError] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 50, scale: 0.9 }}
-      transition={{
-        duration: 1,
-        delay: index * 0.3,
-        ease: [0.43, 0.13, 0.23, 0.96],
-      }}
-      className="bg-gradient-to-br from-white/90 to-[#F7C6D0]/30 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden"
-    >
-      <div className="relative aspect-video bg-gradient-to-br from-pink-100 to-purple-100">
-        {!showVideo ? (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.button
-              whileHover={{ scale: videoError ? 1 : 1.1 }}
-              whileTap={{ scale: videoError ? 1 : 0.95 }}
-              onClick={() => !videoError && setShowVideo(true)}
-              className={`bg-white/90 backdrop-blur-sm rounded-full p-6 shadow-lg transition-all duration-300 ${videoError ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-xl'}`}
-            >
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute inset-0 bg-pink-400/30 rounded-full"
-                />
-              </div>
-            </motion.button>
-
-            {/* Floating hearts around play button */}
-            <div className="absolute inset-0 pointer-events-none">
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute text-2xl"
-                  style={{
-                    left: `${20 + i * 15}%`,
-                    top: `${20 + (i % 2) * 60}%`
-                  }}
-                  animate={{
-                    y: [0, -20, 0],
-                    rotate: [0, 10, -10, 0],
-                    scale: [1, 1.2, 1]
-                  }}
-                  transition={{
-                    duration: 3,
-                    delay: i * 0.5,
-                    repeat: Infinity,
-                    ease: 'easeInOut'
-                  }}
-                >
-                  {['💕', '💖', '💗', '💓', '💘', '💝'][i]}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        ) : videoError ? (
-          <div className="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
-            <div className="text-center">
-              <div className="text-6xl mb-4">🎬</div>
-              <div className="text-pink-700 font-medium">Video coming soon</div>
-              <div className="text-sm text-pink-600 mt-2">Add your personal video to {item.title.toLowerCase()}</div>
-            </div>
-          </div>
-        ) : (
-          <video
-            src={item.video}
-            controls
-            className="w-full h-full object-cover"
-            onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
-            onError={() => setVideoError(true)}
-            poster={item.thumbnail}
-          />
-        )}
-
-        {/* Video overlay with title */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6">
-          <motion.h3
-            className="text-white font-[var(--font-playfair)] text-2xl mb-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            {item.title}
-          </motion.h3>
-          <motion.p
-            className="text-white/90 font-[var(--font-inter)] text-base leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            {item.description}
-          </motion.p>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function VideoMemories() {
   const { theme } = useTheme();
   const headerRef = useRef(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: '-50px' });
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activePhoto, setActivePhoto] = useState<Photo | null>(null);
+
+  const [floatingAccents] = useState(() => {
+    return [...Array(10)].map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      top: `${10 + Math.random() * 70}%`,
+      duration: 8 + i,
+      delay: i * 0.4,
+      emoji: ['💕', '🌸', '✨', '🌹', '💖', '🌷', '🌺', '💗', '💓', '💫'][i % 10]
+    }));
+  });
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setModalOpen(false);
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  function openPhoto(p: Photo) {
+    setActivePhoto(p);
+    setModalOpen(true);
+  }
+
   return (
-    <section className="min-h-screen py-20 px-6 md:px-12 relative overflow-hidden" style={{
-      background: theme === 'dark'
-        ? 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%)'
-        : 'linear-gradient(135deg, #FFE4E1 0%, #FFF0F5 50%, #F8E8EE 100%)'
-    }}>
-      {/* Floating romantic elements */}
+    <section
+      className="min-h-screen py-16 px-6 md:px-12 relative overflow-hidden"
+      style={{
+        background:
+          theme === 'dark'
+            ? 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%)'
+            : 'linear-gradient(135deg, #FFEFF2 0%, #FFF6F9 50%, #FDF0F4 100%)'
+      }}
+    >
+      {/* floating accents */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {floatingAccents.map((accent, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, scale: 0, y: 100 }}
-            animate={{
-              opacity: [0, 0.4, 0],
-              scale: [0, 1, 0],
-              y: [100, -50, -200],
-              rotate: [0, 360]
-            }}
-            transition={{
-              duration: 10 + Math.random() * 5,
-              delay: Math.random() * 3,
-              repeat: Infinity,
-              ease: 'easeInOut'
-            }}
-            className="absolute text-3xl"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${20 + Math.random() * 60}%`
-            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: [0, 0.35, 0], scale: [0, 1, 0] }}
+            transition={{ duration: accent.duration, delay: accent.delay, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute text-2xl"
+            style={{ left: accent.left, top: accent.top }}
           >
-            {['🌸', '💕', '✨', '🌹', '💖', '🌷', '🌺', '💗', '🌻', '💓', '🎬', '📹', '💫'][i % 13]}
+            {accent.emoji}
           </motion.div>
         ))}
       </div>
@@ -187,84 +90,77 @@ export default function VideoMemories() {
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           ref={headerRef}
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={isHeaderInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
-          transition={{ duration: 1.5, ease: [0.43, 0.13, 0.23, 0.96] }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          animate={isHeaderInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0 }}
+          transition={{ duration: 1.2, ease: [0.43, 0.13, 0.23, 0.96] }}
+          className="text-center mb-12"
         >
           <motion.h2
-            className={`text-4xl md:text-5xl mb-6 font-[var(--font-playfair)] leading-relaxed ${
+            className={`text-3xl md:text-4xl mb-4 font-(--font-playfair) leading-tight ${
               theme === 'dark' ? 'text-white' : 'text-[#7B1E3B]'
             }`}
-            animate={{ scale: [1, 1.02, 1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            animate={{ scale: [1, 1.01, 1] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
           >
             💕 Our Cherished Moments 💕
           </motion.h2>
+
           <motion.p
-            className={`text-xl md:text-2xl font-[var(--font-inter)] leading-relaxed mb-4 ${
-              theme === 'dark' ? 'text-white/90' : 'text-[#4E342E]'
-            }`}
+            className={`text-lg md:text-xl font-(--font-inter) mb-6 ${theme === 'dark' ? 'text-white/80' : 'text-[#4E342E]'}`}
             initial={{ opacity: 0 }}
             animate={isHeaderInView ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 1.5, delay: 0.5 }}
+            transition={{ duration: 1.2, delay: 0.3 }}
           >
-            Videos that capture our love story
+            Photos that tell the story of us ✨
           </motion.p>
-          <motion.p
-            className={`text-lg md:text-xl font-[var(--font-playfair)] italic ${
-              theme === 'dark' ? 'text-white/80' : 'text-[#7B1E3B]'
-            }`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 1.5, delay: 1 }}
-          >
-            Every frame tells a story of us ✨🎬
-          </motion.p>
+
+          <div className="mx-auto max-w-xl">
+            <p className={`text-sm ${theme === 'dark' ? 'text-white/60' : 'text-[#6B4550]'}`}>
+              Tap any photo to open a larger view. Made with love.
+            </p>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {videoItems.map((item, index) => (
-            <VideoCard key={item.id} item={item} index={index} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {photos.map((p, i) => (
+            <motion.button
+              key={i}
+              onClick={() => openPhoto(p)}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.06 }}
+              className="aspect-square rounded-2xl overflow-hidden shadow-lg group bg-linear-to-br from-pink-50 to-purple-50"
+            >
+              <div className="w-full h-full relative">
+                <img src={p.src} alt={p.alt || p.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-end">
+                  <div className="p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-full text-left">
+                    <div className="text-white font-medium text-sm drop-shadow">{p.title}</div>
+                  </div>
+                </div>
+              </div>
+            </motion.button>
           ))}
         </div>
 
-        {/* Photo slideshow section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 1.5, delay: 0.5 }}
-          className="mt-20"
-        >
-          <motion.h3
-            className="text-3xl md:text-4xl mb-12 text-[#7B1E3B] font-[var(--font-playfair)] text-center"
-            animate={{ scale: [1, 1.02, 1] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            📸 Memory Slideshow
-          </motion.h3>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[...Array(8)].map((_, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
-                className="aspect-square bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="w-full h-full bg-gradient-to-br from-pink-200/50 to-purple-200/50 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-4xl mb-2">📷</div>
-                    <div className="text-sm text-pink-700 font-medium">Memory {i + 1}</div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+        {/* modal */}
+        {modalOpen && activePhoto && (
+          <div className="fixed inset-0 z-40 flex items-center justify-center p-6">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setModalOpen(false)} />
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.25 }} className="relative z-50 max-w-4xl w-full rounded-2xl overflow-hidden shadow-2xl bg-white">
+              <button aria-label="Close" onClick={() => setModalOpen(false)} className="absolute top-3 right-3 z-50 bg-white/80 hover:bg-white p-2 rounded-full shadow">
+                ✕
+              </button>
+              <div className="w-full bg-black">
+                <img src={activePhoto.src} alt={activePhoto.alt || activePhoto.title} className="w-full h-[60vh] md:h-[70vh] object-contain bg-black" />
+              </div>
+              <div className="p-4 bg-white">
+                <div className="text-lg font-(--font-playfair) text-center text-[#7B1E3B]">{activePhoto.title}</div>
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+        )}
       </div>
     </section>
   );

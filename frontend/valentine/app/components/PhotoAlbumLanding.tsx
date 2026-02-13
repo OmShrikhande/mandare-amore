@@ -93,7 +93,7 @@ export default function PhotoAlbumLanding({ onComplete }: PhotoAlbumLandingProps
     }
   };
 
-  const handleDragEnd = (event: any, { offset, velocity }: PanInfo) => {
+  const handleDragEnd = (event: React.MouseEvent | React.TouchEvent | PointerEvent, { offset, velocity }: PanInfo) => {
     const swipe = swipePower(offset.x, velocity.x);
 
     if (swipe < -swipeConfidenceThreshold) {
@@ -151,7 +151,7 @@ export default function PhotoAlbumLanding({ onComplete }: PhotoAlbumLandingProps
       <div className="relative w-full max-w-sm sm:max-w-md mx-auto px-4">
         {/* Album Border */}
         <motion.div
-          className="relative bg-gradient-to-br from-amber-100 to-orange-200 p-3 sm:p-4 rounded-2xl sm:rounded-3xl shadow-2xl border-2 sm:border-4 border-amber-300"
+          className="relative bg-linear-to-br from-amber-100 to-orange-200 p-3 sm:p-4 rounded-2xl sm:rounded-3xl shadow-2xl border-2 sm:border-4 border-amber-300"
           animate={{
             boxShadow: [
               '0 25px 50px rgba(251, 191, 36, 0.3)',
@@ -256,7 +256,7 @@ export default function PhotoAlbumLanding({ onComplete }: PhotoAlbumLandingProps
 
                 {/* Photo placeholder overlay */}
                 <motion.div
-                  className={`absolute inset-0 bg-gradient-to-br ${photoSlides[currentSlide].bgColor} opacity-20 rounded-xl`}
+                  className={`absolute inset-0 bg-linear-to-br ${photoSlides[currentSlide].bgColor} opacity-20 rounded-xl`}
                   animate={{
                     opacity: [0.2, 0.3, 0.2],
                   }}
@@ -319,7 +319,7 @@ export default function PhotoAlbumLanding({ onComplete }: PhotoAlbumLandingProps
                 playSparkle();
                 onComplete();
               }}
-              className="mt-4 px-8 py-3 bg-gradient-to-r from-pink-400 to-purple-500 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              className="mt-4 px-8 py-3 bg-linear-to-r from-pink-400 to-purple-500 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
             >
               Continue to My Heart 💕
             </motion.button>

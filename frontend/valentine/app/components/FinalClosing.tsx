@@ -27,7 +27,17 @@ export default function FinalClosing() {
   const { theme } = useTheme();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-300px' });
-  const [hearts] = useState<SlowHeart[]>(generateSlowHearts());
+  const [hearts] = useState<SlowHeart[]>(generateSlowHearts);
+
+  const [floatingElements] = useState(() => {
+    return [...Array(30)].map((_, i) => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      duration: 6 + Math.random() * 3,
+      delay: Math.random() * 4,
+      emoji: ['🌸', '💕', '✨', '🌹', '💖', '🌷', '🌺', '💗', '🌻', '💓', '🌼', '💘', '🌸', '💕', '✨'][i % 15]
+    }));
+  });
 
   return (
     <motion.section
@@ -44,13 +54,13 @@ export default function FinalClosing() {
     >
       {/* Enhanced floating elements */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(30)].map((_, i) => (
+        {floatingElements.map((el, i) => (
           <motion.div
             key={i}
             className="absolute text-3xl"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`
+              left: el.left,
+              top: el.top
             }}
             initial={{ opacity: 0, scale: 0, rotate: 0 }}
             animate={{
@@ -60,13 +70,13 @@ export default function FinalClosing() {
               y: [0, -100, -200]
             }}
             transition={{
-              duration: 6 + Math.random() * 3,
-              delay: Math.random() * 4,
+              duration: el.duration,
+              delay: el.delay,
               repeat: Infinity,
               ease: 'easeInOut'
             }}
           >
-            {['🌸', '💕', '✨', '🌹', '💖', '🌷', '🌺', '💗', '🌻', '💓', '🌼', '💘', '🌸', '💕', '✨'][i % 15]}
+            {el.emoji}
           </motion.div>
         ))}
       </div>
@@ -135,7 +145,7 @@ export default function FinalClosing() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 1.5, delay: 1.2 }}
-              className="text-2xl md:text-4xl mb-6 text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
+              className="text-2xl md:text-4xl mb-6 text-[#7B1E3B] font-(--font-playfair) leading-relaxed"
             >
               My Dearest butki,
             </motion.p>
@@ -144,7 +154,7 @@ export default function FinalClosing() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 1.5, delay: 1.8 }}
-              className="text-lg md:text-xl mb-6 text-[#4E342E] font-[var(--font-inter)] leading-relaxed italic"
+              className="text-lg md:text-xl mb-6 text-[#4E342E] font-(--font-inter) leading-relaxed italic"
             >
               As this Valentine&apos;s journey comes to an end, I want you to know that every moment,
               every smile, every shared secret has been etched into my soul forever.
@@ -154,7 +164,7 @@ export default function FinalClosing() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 1.5, delay: 2.4 }}
-              className="text-lg md:text-xl mb-8 text-[#4E342E] font-[var(--font-inter)] leading-relaxed"
+              className="text-lg md:text-xl mb-8 text-[#4E342E] font-(--font-inter) leading-relaxed"
             >
               You are my everything, my butki. My heart beats for you, my dreams include you,
               and my love for you knows no bounds.
@@ -170,7 +180,7 @@ export default function FinalClosing() {
           className="space-y-6"
         >
           <motion.p
-            className="text-xl md:text-3xl text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
+            className="text-xl md:text-3xl text-[#7B1E3B] font-(--font-playfair) leading-relaxed"
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
@@ -180,7 +190,7 @@ export default function FinalClosing() {
           </motion.p>
 
           <motion.p
-            className="text-lg md:text-2xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed"
+            className="text-lg md:text-2xl text-[#4E342E] font-(--font-inter) leading-relaxed"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 2, delay: 4.5 }}
@@ -197,7 +207,7 @@ export default function FinalClosing() {
             className="mt-12"
           >
             <motion.p
-              className="text-4xl md:text-6xl text-[#7B1E3B] font-[var(--font-playfair)] italic font-bold"
+              className="text-4xl md:text-6xl text-[#7B1E3B] font-(--font-playfair) italic"
               animate={{
                 scale: [1, 1.05, 1],
                 textShadow: [
@@ -223,7 +233,7 @@ export default function FinalClosing() {
               className="mt-8"
             >
               <motion.p
-                className="text-lg md:text-xl text-[#4E342E] font-[var(--font-caveat)]"
+                className="text-lg md:text-xl text-[#4E342E] font-(--font-caveat)"
                 animate={{ scale: [1, 1.02, 1] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
               >

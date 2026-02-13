@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 
 export default function ComfortSection() {
   const headerRef = useRef(null);
@@ -10,11 +10,51 @@ export default function ComfortSection() {
   const [teddyClicked, setTeddyClicked] = useState(false);
   const [chocolateClicked, setChocolateClicked] = useState(false);
 
+  // Memoize random values for decorative elements to avoid "Cannot call impure function during render"
+  const floatingElements = useMemo(() => 
+    [...Array(20)].map((_, i) => ({
+      left: `${(i * 7 + 11) % 100}%`, // Deterministic pseudo-random
+      top: `${20 + (i * 3 + 17) % 60}%`,
+      duration: 8 + ((i * 1.5 + 2) % 4),
+      delay: (i * 0.5) % 3,
+      emoji: ['🌸', '💕', '✨', '🌹', '💖', '🌷', '🌺', '💗', '🌻', '💓'][i % 10]
+    })), []);
+
+  const teddySparkles = useMemo(() => 
+    [...Array(8)].map((_, i) => ({
+      left: `${20 + i * 10}%`,
+      top: `${15 + (i % 2) * 60}%`,
+      delay: i * 0.3
+    })), []);
+
+  const heartBursts = useMemo(() => 
+    [...Array(12)].map((_, i) => ({
+      x: ((i * 45) % 200) - 100,
+      y: ((i * 77) % 200) - 100,
+      delay: i * 0.1,
+      emoji: ['💕', '💖', '💗', '💓', '💘'][i % 5]
+    })), []);
+
+  const chocolateSparkles = useMemo(() => 
+    [...Array(6)].map((_, i) => ({
+      left: `${25 + i * 12}%`,
+      top: `${20 + (i % 2) * 50}%`,
+      delay: i * 0.4
+    })), []);
+
+  const chocolateSprinkles = useMemo(() => 
+    [...Array(10)].map((_, i) => ({
+      x: ((i * 33) % 180) - 90,
+      y: ((i * 61) % 180) - 90,
+      delay: i * 0.12,
+      emoji: ['🍫', '🍪', '🧁', '🍬', '🍭'][i % 5]
+    })), []);
+
   return (
-    <section className="min-h-screen py-20 px-6 md:px-12 bg-gradient-to-br from-[#FFE4E1] via-[#FFF0F5] to-[#F8E8EE] relative overflow-hidden">
+    <section className="min-h-screen py-20 px-6 md:px-12 bg-linear-to-br from-[#FFE4E1] via-[#FFF0F5] to-[#F8E8EE] relative overflow-hidden">
       {/* Magical floating elements */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {floatingElements.map((el, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0, y: 100 }}
@@ -25,18 +65,18 @@ export default function ComfortSection() {
               rotate: [0, 360]
             }}
             transition={{
-              duration: 8 + Math.random() * 4,
-              delay: Math.random() * 3,
+              duration: el.duration,
+              delay: el.delay,
               repeat: Infinity,
               ease: 'easeInOut'
             }}
             className="absolute text-2xl"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${20 + Math.random() * 60}%`
+              left: el.left,
+              top: el.top
             }}
           >
-            {['🌸', '💕', '✨', '🌹', '💖', '🌷', '🌺', '💗', '🌻', '💓'][i % 10]}
+            {el.emoji}
           </motion.div>
         ))}
       </div>
@@ -50,14 +90,14 @@ export default function ComfortSection() {
           className="text-center mb-16"
         >
           <motion.h2
-            className="text-4xl md:text-5xl mb-6 text-[#7B1E3B] font-[var(--font-playfair)] leading-relaxed"
+            className="text-4xl md:text-5xl mb-6 text-[#7B1E3B] font-(--font-playfair) leading-relaxed"
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
             💕 My butki, You&apos;re My Everything 💕
           </motion.h2>
           <motion.p
-            className="text-xl md:text-2xl text-[#4E342E] font-[var(--font-inter)] leading-relaxed mb-4"
+            className="text-xl md:text-2xl text-[#4E342E] font-(--font-inter) leading-relaxed mb-4"
             initial={{ opacity: 0 }}
             animate={isHeaderInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1.5, delay: 0.5 }}
@@ -65,7 +105,7 @@ export default function ComfortSection() {
             In your arms, I find my forever home
           </motion.p>
           <motion.p
-            className="text-lg md:text-xl text-[#7B1E3B] font-[var(--font-playfair)] italic"
+            className="text-lg md:text-xl text-[#7B1E3B] font-(--font-playfair) italic"
             initial={{ opacity: 0, y: 20 }}
             animate={isHeaderInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1.5, delay: 1 }}
@@ -102,13 +142,13 @@ export default function ComfortSection() {
               className="cursor-pointer mb-6 relative"
             >
               {/* Magical sparkle effects around teddy */}
-              {[...Array(8)].map((_, i) => (
+              {teddySparkles.map((sparkle, i) => (
                 <motion.div
                   key={i}
                   className="absolute text-lg pointer-events-none"
                   style={{
-                    left: `${20 + i * 10}%`,
-                    top: `${15 + (i % 2) * 60}%`
+                    left: sparkle.left,
+                    top: sparkle.top
                   }}
                   animate={{
                     scale: [0, 1, 0],
@@ -117,7 +157,7 @@ export default function ComfortSection() {
                   }}
                   transition={{
                     duration: 3,
-                    delay: i * 0.3,
+                    delay: sparkle.delay,
                     repeat: Infinity,
                     ease: 'easeInOut'
                   }}
@@ -174,7 +214,7 @@ export default function ComfortSection() {
               className="overflow-hidden"
             >
               <motion.div
-                className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)] text-center leading-relaxed bg-gradient-to-br from-white/80 to-[#F7C6D0]/40 p-6 rounded-2xl shadow-lg relative"
+                className="text-lg md:text-xl text-[#4E342E] font-(--font-inter) text-center leading-relaxed bg-linear-to-br from-white/80 to-[#F7C6D0]/40 p-6 rounded-2xl shadow-lg relative"
                 initial={{ y: 20 }}
                 animate={teddyClicked ? { y: 0 } : { y: 20 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -182,7 +222,7 @@ export default function ComfortSection() {
                 {/* Heart burst animation */}
                 {teddyClicked && (
                   <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(12)].map((_, i) => (
+                    {heartBursts.map((burst, i) => (
                       <motion.div
                         key={i}
                         className="absolute text-xl"
@@ -193,17 +233,17 @@ export default function ComfortSection() {
                         initial={{ scale: 0, x: 0, y: 0, opacity: 1 }}
                         animate={{
                           scale: [0, 1, 0],
-                          x: [0, (Math.random() - 0.5) * 200],
-                          y: [0, (Math.random() - 0.5) * 200],
+                          x: [0, burst.x],
+                          y: [0, burst.y],
                           opacity: [1, 1, 0]
                         }}
                         transition={{
                           duration: 1.5,
-                          delay: i * 0.1,
+                          delay: burst.delay,
                           ease: 'easeOut'
                         }}
                       >
-                        {['💕', '💖', '💗', '💓', '💘'][i % 5]}
+                        {burst.emoji}
                       </motion.div>
                     ))}
                   </div>
@@ -247,13 +287,13 @@ export default function ComfortSection() {
               className="cursor-pointer mb-6 relative"
             >
               {/* Magical sparkle effects around chocolate */}
-              {[...Array(6)].map((_, i) => (
+              {chocolateSparkles.map((sparkle, i) => (
                 <motion.div
                   key={i}
                   className="absolute text-lg pointer-events-none"
                   style={{
-                    left: `${25 + i * 12}%`,
-                    top: `${20 + (i % 2) * 50}%`
+                    left: sparkle.left,
+                    top: sparkle.top
                   }}
                   animate={{
                     scale: [0, 1.2, 0],
@@ -262,7 +302,7 @@ export default function ComfortSection() {
                   }}
                   transition={{
                     duration: 2.5,
-                    delay: i * 0.4,
+                    delay: sparkle.delay,
                     repeat: Infinity,
                     ease: 'easeInOut'
                   }}
@@ -356,7 +396,7 @@ export default function ComfortSection() {
               className="overflow-hidden"
             >
               <motion.div
-                className="text-lg md:text-xl text-[#4E342E] font-[var(--font-inter)] text-center leading-relaxed bg-gradient-to-br from-white/80 to-[#D2691E]/30 p-6 rounded-2xl shadow-lg relative"
+                className="text-lg md:text-xl text-[#4E342E] font-(--font-inter) text-center leading-relaxed bg-linear-to-br from-white/80 to-[#D2691E]/30 p-6 rounded-2xl shadow-lg relative"
                 initial={{ y: 20 }}
                 animate={chocolateClicked ? { y: 0 } : { y: 20 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -364,7 +404,7 @@ export default function ComfortSection() {
                 {/* Chocolate sprinkle animation */}
                 {chocolateClicked && (
                   <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(10)].map((_, i) => (
+                    {chocolateSprinkles.map((sprinkle, i) => (
                       <motion.div
                         key={i}
                         className="absolute text-lg"
@@ -375,17 +415,17 @@ export default function ComfortSection() {
                         initial={{ scale: 0, x: 0, y: 0, opacity: 1 }}
                         animate={{
                           scale: [0, 1, 0],
-                          x: [0, (Math.random() - 0.5) * 180],
-                          y: [0, (Math.random() - 0.5) * 180],
+                          x: [0, sprinkle.x],
+                          y: [0, sprinkle.y],
                           opacity: [1, 1, 0]
                         }}
                         transition={{
                           duration: 1.8,
-                          delay: i * 0.12,
+                          delay: sprinkle.delay,
                           ease: 'easeOut'
                         }}
                       >
-                        {['🍫', '🍪', '🧁', '🍬', '🍭'][i % 5]}
+                        {sprinkle.emoji}
                       </motion.div>
                     ))}
                   </div>
