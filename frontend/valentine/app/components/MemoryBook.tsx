@@ -355,16 +355,7 @@ export default function MemoryBook() {
                         />
                       </div>
                     </div>
-                    <motion.div
-                      className="mt-6 text-center"
-                      initial={{ y: 5, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <p className="text-amber-900/60 text-xl italic" style={{ fontFamily: '"Dancing Script", cursive' }}>
-                        {diaryEntries[currentPage].date}
-                      </p>
-                    </motion.div>
+              
                   </motion.div>
                 </AnimatePresence>
               </motion.div>
