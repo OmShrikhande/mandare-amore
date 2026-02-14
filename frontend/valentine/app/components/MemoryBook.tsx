@@ -355,7 +355,7 @@ export default function MemoryBook() {
                         />
                       </div>
                     </div>
-              
+
                   </motion.div>
                 </AnimatePresence>
               </motion.div>
@@ -455,7 +455,9 @@ export default function MemoryBook() {
                 dragConstraints={{ left: -300, right: 300 }}
                 dragElastic={0.5}
                 onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
+                onDragEnd={(event, info) => {
+                  handleDragEnd(event as MouseEvent | PointerEvent | TouchEvent, info);
+                }}
               >
                 <AnimatePresence mode="wait">
                   <DiaryPageContent
