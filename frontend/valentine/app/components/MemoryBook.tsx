@@ -18,7 +18,7 @@ const diaryEntries: DiaryEntry[] = [
   {
     id: 1,
     title: "The Day We Met",
-    content: "Dear Diary,\n\nToday was the most magical day of my life. I met butki for the first time, and it felt like the universe had finally aligned. Her smile could light up the darkest room, and her laughter is like music to my soul. I knew from that very first moment that she was someone special.\n\nI can't stop thinking about her eyes - so full of warmth and kindness. Every conversation we had felt natural, like we'd known each other forever. I'm falling for her, and it feels wonderful.\n\nLove,\nYour devoted admirer",
+    content: "Dear Diary,\n\nToday was the most magical day of my life. I met gunu for the first time, and it felt like the universe had finally aligned. Her smile could light up the darkest room, and her laughter is like music to my soul. I knew from that very first moment that she was someone special.\n\nI can't stop thinking about her eyes - so full of warmth and kindness. Every conversation we had felt natural, like we'd known each other forever. I'm falling for her, and it feels wonderful.\n\nLove,\nYour devoted admirer",
     emoji: "✨",
     mood: "Excited",
     image: "/media/photos/her-1.jpg"
@@ -26,7 +26,7 @@ const diaryEntries: DiaryEntry[] = [
   {
     id: 2,
     title: "Sweet Conversations",
-    content: "Dear Diary,\n\nWe talked for hours today. butki has the most beautiful mind - her thoughts are so deep and her dreams so inspiring. She told me about her hopes for the future, and I could see myself being part of that future.\n\nHer voice is so gentle and caring. When she laughs, it makes my heart skip a beat. I love how she listens intently and makes me feel truly heard.\n\nEvery moment with her feels like a treasure. I can't wait to create more memories together.\n\nWith all my love",
+    content: "Dear Diary,\n\nWe talked for hours today. gunu has the most beautiful mind - her thoughts are so deep and her dreams so inspiring. She told me about her hopes for the future, and I could see myself being part of that future.\n\nHer voice is so gentle and caring. When she laughs, it makes my heart skip a beat. I love how she listens intently and makes me feel truly heard.\n\nEvery moment with her feels like a treasure. I can't wait to create more memories together.\n\nWith all my love",
     emoji: "💬",
     mood: "Happy",
     image: "/media/photos/together-1.jpg"
@@ -34,7 +34,7 @@ const diaryEntries: DiaryEntry[] = [
   {
     id: 3,
     title: "Her Beautiful Soul",
-    content: "Dear Diary,\n\nToday I saw butki's kindness in action. She helped someone in need without a second thought, and it reminded me why I fell for her. Beyond her stunning beauty lies a soul so pure and gentle.\n\nShe makes the world a better place just by being in it. Her compassion, her warmth, her genuine care for others - these are the qualities that make her extraordinary.\n\nI'm so grateful to have found someone with such a beautiful heart. She inspires me to be a better person every day.\n\nForever yours",
+    content: "Dear Diary,\n\nToday I saw gunu's kindness in action. She helped someone in need without a second thought, and it reminded me why I fell for her. Beyond her stunning beauty lies a soul so pure and gentle.\n\nShe makes the world a better place just by being in it. Her compassion, her warmth, her genuine care for others - these are the qualities that make her extraordinary.\n\nI'm so grateful to have found someone with such a beautiful heart. She inspires me to be a better person every day.\n\nForever yours",
     emoji: "💕",
     mood: "Grateful",
     image: "/media/photos/her-2.jpg"
@@ -42,7 +42,7 @@ const diaryEntries: DiaryEntry[] = [
   {
     id: 4,
     title: "Our Shared Dreams",
-    content: "Dear Diary,\n\nWe talked about our future today, and it filled me with so much joy. butki dreams of traveling the world, learning new things, and making a positive impact. I can see myself right there beside her.\n\nEvery moment with her feels like the beginning of forever. Our dreams align in beautiful ways, and I can't wait to build our future together.\n\nShe makes me believe in soulmates and destiny. With butki, anything feels possible.\n\nDreaming of tomorrow,\nYour hopeful romantic",
+    content: "Dear Diary,\n\nWe talked about our future today, and it filled me with so much joy. gunu dreams of traveling the world, learning new things, and making a positive impact. I can see myself right there beside her.\n\nEvery moment with her feels like the beginning of forever. Our dreams align in beautiful ways, and I can't wait to build our future together.\n\nShe makes me believe in soulmates and destiny. With gunu, anything feels possible.\n\nDreaming of tomorrow,\nYour hopeful romantic",
     emoji: "🌟",
     mood: "Hopeful",
     image: "/media/photos/together-2.jpg"
@@ -50,7 +50,7 @@ const diaryEntries: DiaryEntry[] = [
   {
     id: 5,
     title: "Her Gentle Touch",
-    content: "Dear Diary,\n\nToday butki showed me her gentle side. The way she cares for others, the kindness in her eyes, the warmth of her presence - these are the things that make her truly extraordinary.\n\nHer touch is so gentle, her words so kind. She has this amazing ability to make everyone around her feel special and loved.\n\nI feel so lucky to be on the receiving end of her care. She makes me feel cherished and valued in ways I never thought possible.\n\nWith a heart full of love",
+    content: "Dear Diary,\n\nToday gunu showed me her gentle side. The way she cares for others, the kindness in her eyes, the warmth of her presence - these are the things that make her truly extraordinary.\n\nHer touch is so gentle, her words so kind. She has this amazing ability to make everyone around her feel special and loved.\n\nI feel so lucky to be on the receiving end of her care. She makes me feel cherished and valued in ways I never thought possible.\n\nWith a heart full of love",
     emoji: "🤗",
     mood: "Loved",
     image: "/media/photos/her-3.jpg"
@@ -58,7 +58,7 @@ const diaryEntries: DiaryEntry[] = [
   {
     id: 6,
     title: "Forever My Love",
-    content: "Dear Diary,\n\nMy heart beats for butki. Every day I fall more in love with who she is and who we can be together. She brings out the best in me and makes me want to be a better person.\n\nHer smile, her laugh, her kindness, her dreams - everything about her is perfect to me. I can't imagine my life without her now.\n\nThis is just the beginning of our beautiful story. I promise to love her with all my heart, every single day.\n\nForever and always,\nHer devoted love",
+    content: "Dear Diary,\n\nMy heart beats for gunu. Every day I fall more in love with who she is and who we can be together. She brings out the best in me and makes me want to be a better person.\n\nHer smile, her laugh, her kindness, her dreams - everything about her is perfect to me. I can't imagine my life without her now.\n\nThis is just the beginning of our beautiful story. I promise to love her with all my heart, every single day.\n\nForever and always,\nHer devoted love",
     emoji: "💖",
     mood: "In Love",
     image: "/media/photos/together-3.jpg"
@@ -188,7 +188,7 @@ export default function MemoryBook() {
         <p className={`text-xl font-medium italic ${
           theme === 'dark' ? 'text-white/90' : 'text-pink-700'
         }`} style={{ fontFamily: '"Quicksand", sans-serif' }}>
-          Every page is a piece of my heart, butki... 💕
+          Every page is a piece of my heart, gunu... 💕
         </p>
       </motion.div>
 

@@ -147,7 +147,7 @@ export default function FinalClosing() {
               transition={{ duration: 1.5, delay: 1.2 }}
               className="text-2xl md:text-4xl mb-6 text-[#7B1E3B] font-(--font-playfair) leading-relaxed"
             >
-              My Dearest butki,
+              My Dearest gunu,
             </motion.p>
 
             <motion.p
@@ -166,7 +166,7 @@ export default function FinalClosing() {
               transition={{ duration: 1.5, delay: 2.4 }}
               className="text-lg md:text-xl mb-8 text-[#4E342E] font-(--font-inter) leading-relaxed"
             >
-              You are my everything, my butki. My heart beats for you, my dreams include you,
+              You are my everything, my gunu. My heart beats for you, my dreams include you,
               and my love for you knows no bounds.
             </motion.p>
           </motion.div>
@@ -184,7 +184,7 @@ export default function FinalClosing() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            My butki, there&apos;s nothing I&apos;m asking for.
+            My gunu, there&apos;s nothing I&apos;m asking for.
             <br />
             No expectations. No promises needed.
           </motion.p>
@@ -195,7 +195,7 @@ export default function FinalClosing() {
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 2, delay: 4.5 }}
           >
-            I just wanted you to know, my butki —
+            I just wanted you to know, my gunu —
             <br />
             you are deeply, endlessly, eternally loved.
           </motion.p>

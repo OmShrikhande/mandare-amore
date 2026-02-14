@@ -1,4 +1,4 @@
-// Your TypeScript content goes here, with all instances of 'butki' replaced by 'shonuda'
+// Your TypeScript content goes here, with all instances of 'gunu' replaced by 'shonuda'
 
 import React from 'react';
 

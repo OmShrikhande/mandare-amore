@@ -6,14 +6,14 @@ This directory contains all the media files for your Valentine's Day website. Re
 
 ```
 media/
-├── photos/          # Your personal photos with butki
+├── photos/          # Your personal photos with gunu
 ├── videos/          # Romantic video memories
 ├── audio/           # Background music and sound effects
 └── animations/      # Lottie animation files (optional)
 ```
 
 ## Photos (photos/)
-Add high-quality photos of you and butki. Recommended formats: JPG, PNG, WebP
+Add high-quality photos of you and gunu. Recommended formats: JPG, PNG, WebP
 - `memory-1.jpg` - A beautiful photo of you two together
 - `memory-2.jpg` - A candid moment
 - `memory-3.jpg` - A romantic pose

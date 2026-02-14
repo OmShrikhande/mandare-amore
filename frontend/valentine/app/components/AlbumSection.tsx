@@ -17,28 +17,28 @@ const albumItems: AlbumItem[] = [
     id: 1,
     image: '/media/photos/her-1.jpg',
     fallbackImage: '/media/photos/her-1.jpg',
-    text: 'My butki, just like Duudu, you\'re the most adorable and loving bear I know. Your gentle nature and sweet smile light up my world every single day. 💕',
-    title: 'Duudu - My butki'
+    text: 'My gunu, just like Duudu, you\'re the most adorable and loving bear I know. Your gentle nature and sweet smile light up my world every single day. 💕',
+    title: 'Duudu - My gunu'
   },
   {
     id: 2,
     image: '/media/photos/together-1.jpg',
     fallbackImage: '/media/photos/together-1.jpg',
-    text: 'butki, you\'re my Buubu - the perfect partner who makes every moment special. Your playful spirit and loving heart complete me in ways I never imagined. 🧸',
-    title: 'Buubu - My butki'
+    text: 'gunu, you\'re my Buubu - the perfect partner who makes every moment special. Your playful spirit and loving heart complete me in ways I never imagined. 🧸',
+    title: 'Buubu - My gunu'
   },
   {
     id: 3,
     image: '/media/photos/her-2.jpg',
     fallbackImage: '/media/photos/her-2.jpg',
-    text: 'My butki, together we\'re like Duudu and Buubu - the perfect couple who share endless love, laughter, and beautiful moments that last forever. 💑',
+    text: 'My gunu, together we\'re like Duudu and Buubu - the perfect couple who share endless love, laughter, and beautiful moments that last forever. 💑',
     title: 'Our Love Story'
   },
   {
     id: 4,
     image: '/media/photos/together-2.jpg',
     fallbackImage: '/media/photos/together-2.jpg',
-    text: 'butki, my forever love, just like Duudu and Buubu, our story is one of eternal love, sweet moments, and hearts that beat as one. I love you endlessly. 💘',
+    text: 'gunu, my forever love, just like Duudu and Buubu, our story is one of eternal love, sweet moments, and hearts that beat as one. I love you endlessly. 💘',
     title: 'Forever Love'
   }
 ];
@@ -126,7 +126,7 @@ export default function AlbumSection() {
           transition={{ duration: 1.5, ease: [0.43, 0.13, 0.23, 0.96] }}
           className="text-3xl md:text-4xl mb-16 text-[#7B1E3B] font-(--font-playfair) text-center"
         >
-          My butki in Every Form
+          My gunu in Every Form
           <br />
           <span className="text-2xl md:text-3xl">The bears that remind me of you</span>
         </motion.h2>

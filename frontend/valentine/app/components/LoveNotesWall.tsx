@@ -15,49 +15,49 @@ interface Note {
 const notes: Note[] = [
   {
     id: 1,
-    text: 'My butki, you make every day feel like a beautiful adventure',
+    text: 'My gunu, you make every day feel like a beautiful adventure',
     rotation: -2,
     color: '#FFF9C4',
   },
   {
     id: 2,
-    text: 'Being with you, butki, feels like coming home to paradise',
+    text: 'Being with you, gunu, feels like coming home to paradise',
     rotation: 3,
     color: '#F8BBD0',
   },
   {
     id: 3,
-    text: "butki, you're so wonderfully unique - that's your magic",
+    text: "gunu, you're so wonderfully unique - that's your magic",
     rotation: -4,
     color: '#E1BEE7',
   },
   {
     id: 4,
-    text: "My heart finds peace in your gentle presence, butki",
+    text: "My heart finds peace in your gentle presence, gunu",
     rotation: 2,
     color: '#FFCCBC',
   },
   {
     id: 5,
-    text: 'butki, your smile could light up the darkest night',
+    text: 'gunu, your smile could light up the darkest night',
     rotation: -3,
     color: '#C5E1A5',
   },
   {
     id: 6,
-    text: "Every moment with you feels like a precious gift, my butki",
+    text: "Every moment with you feels like a precious gift, my gunu",
     rotation: 4,
     color: '#B3E5FC',
   },
   {
     id: 7,
-    text: 'butki, you inspire me to be the best version of myself',
+    text: 'gunu, you inspire me to be the best version of myself',
     rotation: -1,
     color: '#FFECB3',
   },
   {
     id: 8,
-    text: "I'm endlessly grateful for your love, my beautiful butki",
+    text: "I'm endlessly grateful for your love, my beautiful gunu",
     rotation: 2,
     color: '#F8BBD0',
   },
@@ -236,7 +236,7 @@ export default function LoveNotesWall() {
             animate={{ scale: [1, 1.02, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           >
-            💌 Love Notes for My butki 💌
+            💌 Love Notes for My gunu 💌
           </motion.h2>
           <motion.p
             className={`text-xl md:text-2xl font-(--font-inter) leading-relaxed mb-4 ${
