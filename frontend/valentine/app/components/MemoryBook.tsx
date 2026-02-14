@@ -575,9 +575,6 @@ function DiaryPageContent({ entry }: { entry: DiaryEntry }) {
         <h3 className="text-3xl font-bold text-[#8B1538] mb-1 italic" style={{ fontFamily: '"Dancing Script", cursive' }}>
           {entry.title}
         </h3>
-        <p className="text-xs text-rose-400 font-bold tracking-widest uppercase" style={{ fontFamily: '"Quicksand", sans-serif' }}>
-          {entry.mood ? `Mood: ${entry.mood}` : entry.date}
-        </p>
       </div>
 
       <div className="flex-1 space-y-4 overflow-y-auto relative z-10">
