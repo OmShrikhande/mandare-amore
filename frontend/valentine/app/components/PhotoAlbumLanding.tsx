@@ -181,7 +181,7 @@ export default function PhotoAlbumLanding({ onComplete }: PhotoAlbumLandingProps
                 onDragStart={() => setIsDragging(true)}
                 onDragEnd={(event, info) => {
                   setIsDragging(false);
-                  handleDragEnd(event, info);
+                  handleDragEnd(event as React.MouseEvent | React.TouchEvent | PointerEvent, info);
                 }}
                 className={`relative h-64 sm:h-80 flex flex-col items-center justify-center text-center cursor-grab active:cursor-grabbing transition-transform duration-200 ${
                   isDragging ? 'scale-95 brightness-110' : ''
